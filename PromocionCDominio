@@ -1,0 +1,6 @@
+#Supongamos que se quiere crear un  dominio en un nuevo bosque y que se llamará smr.local. 
+#El siguiente comando, permite realizar esa acción:
+dcpromo /unattend /InstallDns:yes /replicaOrNewDomain:domain 
+/newDomain:forest /newDomainDnsName:sor.local /DomainNetbiosName:smr 
+/databasePath:"c:\ntds" /logPath:"c:\ntdslogs" /sysvolpath:"C:\Windows\sysvol" 
+/safeModeAdminPassword:Eeupqtc,7 /rebootOnCompletion:yes
