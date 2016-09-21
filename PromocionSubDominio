@@ -22,3 +22,7 @@ dcpromo /unattend /InstallDNS:yes /ParentDomainDNSName:smr.local /UserName:Admin
 #sysvolpath="<La ruta de acceso de una carpeta en un volumen local>"
 #SafeModeAdminPassword=<La contraseña de una cuenta de administrador sin conexión>
 #RebootOnCompletion=yes
+#
+#Referencias
+#https://support.microsoft.com/es-es/kb/947034
+#https://technet.microsoft.com/es-es/library/cc732887%28v=ws.10%29.aspx
