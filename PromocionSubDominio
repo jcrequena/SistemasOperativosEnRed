@@ -1,0 +1,24 @@
+#Supongamos que se parte de un dominio raiz ya promocionado a Controlador del Dominio y que se llama smr.local. 
+#El siguiente paso es crear el subdominio sor mediante el comando dcpromo:
+
+dcpromo /unattend /InstallDNS:yes /ParentDomainDNSName:smr.local /UserName:Administrador
+/userDomain:smr /Password:* /replicaOrNewDomain:domain /NewDomain:child
+/newDomainDnsName:sor.smr.local /ChildName:sor /DomainNetbiosName:sor
+/databasePath:"c:\ntds" /LogPath:"c:\ntdslogs" /sysvolpath:"c:\sysvol" /safeModeAdminPassword:Eeupqt,9
+/rebootOnCompletion:yes
+
+#Donde los parámetros usados son:
+#InstallDNS=yes =<Instala el servidor DNS>
+#ParentDomainDNSName=<Nombre DNS completo del dominio raiz>
+#UserName=<La cuenta administrativa del dominio raiz>
+#UserDomain=<El nombre del dominio de la cuenta de usuario>
+#Password=<La contraseña de la cuenta de usuario administrador del dominio raíz> Especifique * para solicitar al usuario las credenciales durante la instalación.
+#NewDomain=child =<Especifica que es un dominio hijo (subdominio)>
+#ChildName=<El nombre DNS de una sola etiqueta del nuevo dominio>
+#DomainNetBiosName=<La primera etiqueta del nombre DNS completo>
+#ReplicaOrNewDomain=domain
+#DatabasePath="<La ruta de acceso de una carpeta en un volumen local>"
+#LogPath="<La ruta de acceso de una carpeta en un volumen local>"
+#sysvolpath="<La ruta de acceso de una carpeta en un volumen local>"
+#SafeModeAdminPassword=<La contraseña de una cuenta de administrador sin conexión>
+#RebootOnCompletion=yes
