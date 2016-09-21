@@ -4,3 +4,6 @@ dcpromo /unattend /InstallDns:yes /replicaOrNewDomain:domain
 /newDomain:forest /newDomainDnsName:sor.local /DomainNetbiosName:smr 
 /databasePath:"c:\ntds" /logPath:"c:\ntdslogs" /sysvolpath:"C:\Windows\sysvol" 
 /safeModeAdminPassword:Eeupqtc,7 /rebootOnCompletion:yes
+
+#Referencia: https://support.microsoft.com/es-es/kb/947034
+
