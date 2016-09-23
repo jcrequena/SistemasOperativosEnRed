@@ -7,7 +7,9 @@ dcpromo /unattend /InstallDNS:yes /ParentDomainDNSName:smr.local /UserName:Admin
 /databasePath:"c:\ntds" /LogPath:"c:\ntdslogs" /sysvolpath:"c:\sysvol" /safeModeAdminPassword:Eeupqt,9
 /rebootOnCompletion:yes
 
-#
+#Nota:
+# El parámetro /Password:* --> El * indica que nos solitirá el password durante el proceso de promoción, y a sí
+# se oculta en el comando para mantener la seguridad de revelación de claves.
 #Referencias
 #https://support.microsoft.com/es-es/kb/947034
 #https://technet.microsoft.com/es-es/library/cc732887%28v=ws.10%29.aspx
