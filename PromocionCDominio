@@ -5,5 +5,7 @@ dcpromo /unattend /InstallDns:yes /replicaOrNewDomain:domain
 /databasePath:"c:\ntds" /logPath:"c:\ntdslogs" /sysvolpath:"C:\Windows\sysvol" 
 /safeModeAdminPassword:Eeupqtc,7 /rebootOnCompletion:yes
 
-#Referencia: https://support.microsoft.com/es-es/kb/947034
+#Referencias:
+#https://support.microsoft.com/es-es/kb/947034
+#https://technet.microsoft.com/en-us/library/cc732887(v=ws.11).aspx
 
