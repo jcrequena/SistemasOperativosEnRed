@@ -5,7 +5,8 @@ dcpromo /unattend /InstallDns:yes /replicaOrNewDomain:domain
 /databasePath:"c:\ntds" /logPath:"c:\ntdslogs" /sysvolpath:"C:\Windows\sysvol" 
 /safeModeAdminPassword:Eeupqtc,7 /rebootOnCompletion:yes
 
-#Referencias:
-#https://support.microsoft.com/es-es/kb/947034
-#https://technet.microsoft.com/en-us/library/cc732887(v=ws.11).aspx
+# Referencias:
+# Para el server Core: http://www.loudsteve.com/2010/03/02/windows-server-core-installing-adds-role/
+# https://support.microsoft.com/es-es/kb/947034
+# https://technet.microsoft.com/en-us/library/cc732887(v=ws.11).aspx
 
