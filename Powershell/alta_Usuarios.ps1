@@ -1,14 +1,14 @@
+#alta_Usuarios.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 la extensión y parámetro 3 la ruta del fichero csv
 #
 #Creación de los usuarios
 #
-
-param($a,$b)
-
+param($a,$b,$c)
+#DC=smr,DC=local
 $dc="dc="+$a+",dc="+$b
+$usuariosCsv=$c
 
-$fichero = import-csv -Path usuarios.csv
+$fichero = import-csv -Path $usuariosCsv
 $Class = "User"
-
 foreach($linea in $fichero)
 {
 	$ou = "ou="+$linea.Cargo
