@@ -1,0 +1,11 @@
+#Supongamos que se quiere crear un  dominio en un nuevo bosque y que se llamará smr.local. 
+#El siguiente comando, permite realizar esa acción:
+dcpromo /unattend /InstallDns:yes /replicaOrNewDomain:domain 
+/newDomain:forest /newDomainDnsName:sor.local /DomainNetbiosName:smr 
+/databasePath:"c:\ntds" /logPath:"c:\ntdslogs" /sysvolpath:"C:\Windows\sysvol" 
+/safeModeAdminPassword:Eeupqtc,7 /rebootOnCompletion:yes
+
+# Referencias:
+# Para el server Core: http://www.loudsteve.com/2010/03/02/windows-server-core-installing-adds-role/
+# https://support.microsoft.com/es-es/kb/947034
+# https://technet.microsoft.com/en-us/library/cc732887(v=ws.11).aspx
