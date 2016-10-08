@@ -1,6 +1,9 @@
 #
 #Creación de las unidades organizativas
 #
+param($a,$b)
+$dc="dc="+$a+",dc="+$b
+
 $fichero = import-csv -Path unidades_org.csv
 $ADSI = [ADSI]"LDAP://$dc"
 $Class = "OrganizationalUnit"
