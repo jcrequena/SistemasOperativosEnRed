@@ -17,13 +17,3 @@ foreach($linea in $fichero)
     $Group = $ADSI.create($Class, $Name)
     $Group.setInfo()
 }
-
-$fichero= import-csv -Path grupos.csv
-$Class = "Group"
-$ADSI = [ADSI]"LDAP://cn=users,$dc"
-foreach($linea in $fichero)
-{
-    $Name = "CN="+$linea.Grupo
-    $Group = $ADSI.create($Class, $Name)
-    $Group.setInfo()
-}
