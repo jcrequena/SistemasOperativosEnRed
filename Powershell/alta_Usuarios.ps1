@@ -9,7 +9,7 @@ $usuariosCsv=$c
 
 $fichero = import-csv -Path $usuariosCsv
 $Class = "User"
-foreach($linea in $fichero)
+foreach($linea in $usuariosCsv)
 {
 	$ou = "ou="+$linea.Cargo
 	$nombre = $linea.Nombre+"."+$linea.PrimerApellido
