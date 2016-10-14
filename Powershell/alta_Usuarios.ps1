@@ -6,7 +6,9 @@ param($a,$b,$c)
 #DC=smr,DC=local
 $dc="dc="+$a+",dc="+$b
 $usuariosCsv=$c
-
+#
+#Los campos del fichero csv están separados por el carácter ,
+#
 $fichero = import-csv -Path $usuariosCsv
 $Class = "User"
 foreach($linea in $fichero)
