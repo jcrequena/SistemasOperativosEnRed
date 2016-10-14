@@ -12,12 +12,15 @@ $usuariosCsv=$c
 $fichero = import-csv -Path $usuariosCsv -Delimiter :  # El valor por defecto del delimitador de campos es el carácter ,
 						      #Referencia: https://technet.microsoft.com/es-es/library/hh849891.aspx
 $Class = "User"
+
+#Grupo:RutaContenedor
 foreach($linea in $fichero)
 {
-	$ou = "ou="+$linea.Cargo
+	$rutaContenedor = $linea.RutaContenedor #Ruta donde se creará el usuarios
+						      #Será la misma ruta donde ya se ha creado el grupo, que es, donde integramos el usuario.
 	$nombre = $linea.Nombre+"."+$linea.PrimerApellido
 
-	$ADSI = [ADSI]"LDAP://$ou,$dc"
+	$ADSI = [ADSI]"LDAP://$rutaContenedor,$dc"
 	$cnuser = "cn="+$nombre
 	$User = $ADSI.create($Class,$cnuser)
 
@@ -37,10 +40,8 @@ foreach($linea in $fichero)
         
 	#Membresía de grupo: Con esta parte de código, establecemos los grupos de los cuales será
 	#miembro el usuario creado
-	$cngrupo="cn="+$linea.Nivel   #Nombre del grupo
-	$uo_users="cn=users"    #Ruta donde está ubicado el grupo, en este caso, está ubicado en el contenedor Users
-	$grupoActual = [ADSI]"LDAP://$cngrupo,$uo_users,$dc" #ADSI: LDAP://Nombre_grupo,ruta_del_grupo,controlador_dominio
-	$grupoActual.Add("LDAP://$cnuser,$ou,$dc") # Añadimos al grupo (membresía) el usuario creado haciendo uso del protocolo LDAP
+	$cngrupo="cn="+$linea.Grupo   #Nombre del grupo  
+	$grupoActual = [ADSI]"LDAP://$cngrupo,$rutaContenedor,$dc" #ADSI: LDAP://Nombre_grupo,ruta_del_contenedor,controlador_dominio
+	$grupoActual.Add("LDAP://$cnuser,$rutaContenedor,$dc") # Añadimos al grupo (membresía) el usuario creado haciendo uso del protocolo LDAP
 	$grupoActual.SetInfo() #Guardamos en la BD la información
-
 }
