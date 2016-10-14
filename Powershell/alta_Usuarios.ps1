@@ -1,4 +1,11 @@
 #alta_Usuarios.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 la extensión y parámetro 3 la ruta del fichero csv
+
+#Primero comprobaremos si se tiene cargado el módulo Active Directory
+if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe una entrada llamada ActiveDirectory
+{
+  Import-Module ActiveDirectory #Se carga el módulo
+}
+
 #
 #Creación de los usuarios
 #
