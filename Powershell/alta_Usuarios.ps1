@@ -9,7 +9,8 @@ $usuariosCsv=$c
 #
 #Los campos del fichero csv están separados por el carácter ,
 #
-$fichero = import-csv -Path $usuariosCsv
+$fichero = import-csv -Path $usuariosCsv -Delimiter :  # El valor por defecto del delimitador de campos es el carácter ,
+						      #Referencia: https://technet.microsoft.com/es-es/library/hh849891.aspx
 $Class = "User"
 foreach($linea in $fichero)
 {
