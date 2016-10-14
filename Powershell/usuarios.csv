@@ -1,5 +1,2 @@
 Nombre:PrimerApellido:SegundoApellido:DNI:Grupo:RutaContenedor
-Alumna1:Apellido1:Apellido12:12345678-A:ESO:Profesores
-Alumno2:Apellido2:Apellido21:12345679-B:Ciclos:Profesores
-Alumna3:Apellido3:Apellido31:12345680-C:Ciclos:Alumnos
-Alumno4:Apellido4:Apellido41:12345681-D:ESO:Alumnos
+Alumna1:Apellido1:Apellido12:12345678-A:Ciclos:ou=Alumnos
