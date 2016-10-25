@@ -13,11 +13,11 @@ net share Documentos_Producción=C:\Documentación\Producción /GRANT:Todos,full
 net share Documentos_Servicios=C:\Documentación\Servicios /GRANT:Todos,full
 net share Documentos_Ventas=C:\Documentación\Ventas /GRANT:Todos,full
 REM Aplicamos las ACLs
-icacls C:\Documentación\Dirección /GRANT CEFIRE\Dirección:(R,W)
-icacls C:\Documentación\Finanzas /GRANT CEFIRE\Finanzas:(R,W)
-icacls C:\Documentación\Producción /GRANT CEFIRE\Producción:(R,W)
-icacls C:\Documentación\Servicios /GRANT CEFIRE\Servicios:(R,W)
-icacls C:\Documentación\Ventas /GRANT CEFIRE\Ventas:(R,W)
+icacls C:\Documentación\Dirección /GRANT smr\Dirección:(R,W)
+icacls C:\Documentación\Finanzas /GRANT smr\Finanzas:(R,W)
+icacls C:\Documentación\Producción /GRANT smr\Producción:(R,W)
+icacls C:\Documentación\Servicios /GRANT smr\Servicios:(R,W)
+icacls C:\Documentación\Ventas /GRANT smr\Ventas:(R,W)
 REM Eliminamos los permisos asignados al grupo 'Usuarios del dominio'
 icacls C:\Documentación\Dirección /inheritance:d /T
 icacls C:\Documentación\Dirección /remove:g Usuarios
