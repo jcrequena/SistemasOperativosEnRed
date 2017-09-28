@@ -1,0 +1,35 @@
+1. Para ver la versión de Powershell
+PS C:\> get-host
+
+2. Para ver los módulos que tenemos instalados en el sistema
+PS C:\> get-module -list
+
+3. Gestión de características
+#Añadir la característica AD-Domain-Services
+PS C:\> Add-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
+
+#Para obtener información de una característica
+PS C:\> Get-WindowsFeature -Name AD-Domain-Services
+
+#Para quitar una característica
+PS C:\> Remove-WindowsFeature -Name AD-Domain-Services
+
+
+#Para ver los módulos que tenemos
+PS C:\> dism /online /get-features /format:table
+
+#Para ver los módulos que tenemos
+PS C:\>Dism /online /get-features /format:table
+
+4. Configurar red:
+netsh interface ipv4 set address name="1" source=static ad
+dress=192.168.115.10 mask=255.255.255.0 gateway=192.168.115.1.
+
+5. Cambiar nombre al equipo
+# En este ejemplo, renombraré el equipo con el nombre: CS-01
+
+PS C:\>NETDOM RENAMECOMPUTER %COMPUTERNAME% /NEWNAME:CS-01
+
+6. Reiniciar windows Server core
+
+PS C:\> shutdown -r -t 0
