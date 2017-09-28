@@ -4,7 +4,7 @@
 function mostrarMenu 
 { 
      param ( 
-           [string]$Titulo = 'Opciones del Menu' 
+           [string]$Titulo = 'Selección de opciones' 
      ) 
      cls 
      Write-Host "================ $Titulo================" 
