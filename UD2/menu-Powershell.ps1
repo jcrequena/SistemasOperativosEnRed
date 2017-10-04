@@ -25,13 +25,17 @@ do
            '1' { 
                 cls 
                 'Primera Opción' 
+                pause
            } '2' { 
                 cls 
                 'Segunda Opción' 
+                pause
            } '3' { 
                 cls 
                 'Tercera Opción' 
-           } 's' { 
+                pause
+           } 's' {
+                'Saliendo del script...'
                 return 
            }  
      } 
