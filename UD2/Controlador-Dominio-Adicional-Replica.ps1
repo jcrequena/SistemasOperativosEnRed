@@ -3,12 +3,19 @@
 # Este comando promociona un equipo Windows Server R2 Datacenter a controlador de dominio adicional (réplica) en el Controlador
 # del dominio existente smr.local.
 # Este nuevo CD haría las veces de réplica o balenceo de cargas.
+# Antes de ejecutar el script debes realizar:
+# 1. Configurar el tcp/ip del equipo con una ip dentro del rango del maestro de operaciones y con el dns principal la ip del
+# servidor maestro de operaciones.
+# 2. Integrar el equipo en el dominio smr.local
+
+# Enlace al vídeo explicativo del proceso: 
 
 #  
 # Windows PowerShell Script for AD DS Deployment  
 #  
 Import-Module ADDSDeployment `
-Install-ADDSDomainController –NoGlobalCatalog:$false `
+Install-ADDSDomainController 
+–NoGlobalCatalog:$false `
 –CreateDNSDelegation:$false `
 –Credential (Get-Credential) `
 –CriticalReplicationOnly:$false `
@@ -17,8 +24,10 @@ Install-ADDSDomainController –NoGlobalCatalog:$false `
 –InstallDNS:$True `
 –LogPath “C:\Windows\NTDS” `
 –NoRebootOnCompletion:$False `
+-ReplicationSourceDC "srv-2012R2D-FSMO.smr.local" `
 –SiteName “Default-First-Site-Name” `
 –SysVolPath “C:\Windows\SYSVOL” `
 -Force:$true
 
+# NOTA: srv-2012R2D-FSMO es el nombre del equipo servidor maestro de operaciones
 
