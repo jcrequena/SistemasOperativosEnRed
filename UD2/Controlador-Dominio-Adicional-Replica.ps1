@@ -1,5 +1,6 @@
 #Referencia
 # https://docs.microsoft.com/es-es/windows-server/identity/ad-ds/deploy/install-a-replica-windows-server-2012-domain-controller-in-an-existing-domain--level-200-#BKMK_PS
+# https://msdn.microsoft.com/es-es/library/jj574134(v=ws.11).aspx
 # Este comando promociona un equipo Windows Server R2 Datacenter a controlador de dominio adicional (réplica) en el Controlador
 # del dominio existente smr.local.
 # Este nuevo CD haría las veces de réplica o balenceo de cargas.
