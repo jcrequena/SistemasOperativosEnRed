@@ -1,6 +1,7 @@
 #El comando para crear un dominio secundario (subdominio (child domain)) 
 # o un dominio de árbol (tree domanin) es casi el mismo. 
-#Como recordatorio: Para instalar ADDS para poder promocionar un dominio, el comando es:
+#Como recordatorio: Para instalar el rol AD DS para poder promocionar un dominio y las herramientas de administración
+# de Active Directory, el comando es:
 
 Install-WindowsFeature –Name AD-Domain-Services –IncludeManagementTools
 # Dominio secundario (child domain): 
