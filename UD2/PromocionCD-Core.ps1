@@ -3,8 +3,8 @@ Install-ADDSForest `
 -CreateDnsDelegation:$false `
 -DatabasePath "C:\Windows\NTDS" `
 -DomainMode "Win2012R2" `
--DomainName "DC2012R2.ES" `
--DomainNetbiosName "DC2012R2" `
+-DomainName "smr.local" `
+-DomainNetbiosName "smr" `
 -ForestMode "Win2012R2" `
 -InstallDns:$true `
 -LogPath "C:\Windows\NTDS" `
