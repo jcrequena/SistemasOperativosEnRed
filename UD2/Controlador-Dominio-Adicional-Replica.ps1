@@ -29,5 +29,9 @@ Install-ADDSDomainController
 –SysVolPath “C:\Windows\SYSVOL” `
 -Force:$true
 
+# Para ver el significado de cada parámetro del cmdlet ir a: 
+#https://technet.microsoft.com/es-es/library/hh974723(v=wps.630).aspx
+
+
 # NOTA: srv-2012R2D-FSMO es el nombre del equipo servidor maestro de operaciones
 
