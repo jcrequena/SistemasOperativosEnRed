@@ -8,7 +8,7 @@
 # servidor maestro de operaciones.
 # 2. Integrar el equipo en el dominio smr.local
 
-# Enlace al vídeo explicativo del proceso: 
+# Enlace al vídeo explicativo del proceso: https://youtu.be/oMtheS4Xa-c
 
 #  
 # Windows PowerShell Script for AD DS Deployment  
