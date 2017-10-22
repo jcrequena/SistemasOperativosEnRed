@@ -39,7 +39,7 @@ foreach($linea in $fichero)
 		$nameShort=$nombre+'.'+$linea.PrimerApellido+$linea.SegundoApellido
 	}
 	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort -Surname $Surnames -DisplayName $nameLarge -GivenName $name -Description "Cuenta de $nombreLargo" -EmailAddress "$email" -AccountPassword $passAccount -Enabled $true -CannotChangePassword $false -ChangePasswordAtLogon $true -PasswordNotRequired $false -Path $rutaContenedor
-	#-OtherAttributes:@{"logonHours"="192","255","1","192","255","1","192","255","1","192","255","1","192","255","1","192","255","1","192","255","1"}	
+	#Asignar cuenta de Usuario a Grupo
 	Add-ADGroupMember -Identity $grpAccount -Members $nameShort
 }
 
