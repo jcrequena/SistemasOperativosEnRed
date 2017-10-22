@@ -1,3 +1,3 @@
-Equipo
-W10-CLI001
-W10-CLI002
+Equipo:Ruta
+W10-CLI001:OU=Equipos-DepInf,OU=Dep-Informatica
+W10-CLI002:OU=Equipos-DepInf,OU=Dep-Informatica
