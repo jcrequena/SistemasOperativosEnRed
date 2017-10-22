@@ -12,11 +12,11 @@ if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe un
 param($a,$b,$c)
 #DC=smr,DC=local
 $dc="dc="+$a+",dc="+$b
-$usuariosCsv=$c
+$fileUsersCsv=$c
 #
 #Los campos del fichero csv están separados por el carácter ,
 #
-$fichero = import-csv -Path $usuariosCsv -Delimiter : 
+$fichero = import-csv -Path $fileUsersCsv -Delimiter : 
 						     
 foreach($linea in $fichero)
 {
@@ -41,7 +41,18 @@ foreach($linea in $fichero)
 	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort -Surname $Surnames -DisplayName $nameLarge -GivenName $name -LogonWorkstations:$linea.Equipo -Description "Cuenta de $nombreLargo" -EmailAddress "$email" -AccountPassword $passAccount -Enabled $true -CannotChangePassword $false -ChangePasswordAtLogon $true -PasswordNotRequired $false -Path $rutaContenedor
 	#Asignar cuenta de Usuario a Grupo
 	Add-ADGroupMember -Identity $grpAccount -Members $nameShort
+	
+	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)      
+	[byte[]]$hoursSession = @(0,0,0,0,255,3,0,255,3,0,255,3,0,255,3,0,255,3,0,0,0)                                       
+	Get-ADUser -Identity $nameShort | Set-ADUser -Replace @{logonhours = $hoursSession} 
 }
+
+#Ejemplos de establecer vector de inicios de sesión
+# Deny all logon
+# [byte[]]$hours = @(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+
+# Allow logon at all hours
+# [byte[]]$hours = @(255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255)
 
 # A continuación, las propiedades de New-ADUser que se han utilizado son:
 SamAccountName: nombre de la cuenta SAM para compatibilidad con equipos anteriores a Windows 2000.
