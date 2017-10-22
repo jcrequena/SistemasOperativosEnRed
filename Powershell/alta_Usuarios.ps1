@@ -5,10 +5,10 @@ if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe un
 {
   Import-Module ActiveDirectory #Se carga el módulo
 }
-
 #
 #Creación de los usuarios
 #
+
 param($a,$b,$c)
 #DC=smr,DC=local
 $dc="dc="+$a+",dc="+$b
@@ -16,39 +16,44 @@ $usuariosCsv=$c
 #
 #Los campos del fichero csv están separados por el carácter ,
 #
-$fichero = import-csv -Path $usuariosCsv -Delimiter :  # El valor por defecto del delimitador de campos es el carácter ,
-						      #Referencia: https://technet.microsoft.com/es-es/library/hh849891.aspx
-$Class = "User"
-
-#Grupo:RutaContenedor
+$fichero = import-csv -Path $usuariosCsv -Delimiter : 
+						     
 foreach($linea in $fichero)
 {
-	$rutaContenedor = $linea.RutaContenedor #Ruta donde se creará el usuarios
-						      #Será la misma ruta donde ya se ha creado el grupo, que es, donde integramos el usuario.
-	$nombre = $linea.Nombre+"."+$linea.PrimerApellido
+	$rutaContenedor =$linea.RutaContenedor+","+$dc #Ruta donde se creará el usuario
 
-	$ADSI = [ADSI]"LDAP://$rutaContenedor,$dc"
-	$cnuser = "cn="+$nombre
-	$User = $ADSI.create($Class,$cnuser)
+	#Guardamos de manera segura la contraseña que en este caso corresponde al DNI-
+	$passAccount=ConvertTo-SecureString $linea.DNI -AsPlainText -force
+	
+	$name=$linea.Nombre
+	$nameShort=$linea.Nombre+'.'+$linea.PrimerApellido
+	$Surnames=$linea.PrimerApellido+' '+$linea.SegundoApellido
+	$nameLarge=$linea.Nombre+' '+$linea.PrimerApellido+' '+$linea.SegundoApellido
+	$grpAccount=$linea.Grupo
+	$computerAccount=$linea.Equipo
+	$email=$nameShort+"@"+$a+"."+$b
 
-	$User.put("UserPrincipalName", $nombre)
-	$User.put("SamAccountName", $nombre)
-	$User.put("givenName", $($linea.Nombre))
-	$User.put("sn", $($linea.PrimerApellido+" "+$linea.SegundoApellido))
-	$User.put("displayName", $($linea.Nombre+" "+$linea.PrimerApellido+" "+$linea.SegundoApellido))
-	$User.put("mail", $($nombre+"@"+$a+"."+$b))
-	$User.setInfo()
-	#
-	#Lo último que hacemos es: Establecer el Password y si el user está habilitado o no.
-	#
-	$User.SetPassword($($linea.DNI))
-	$User.psbase.invokeset("AccountDisabled", "False")
-	$User.setInfo()
-        
-	#Membresía de grupo: Con esta parte de código, establecemos los grupos de los cuales será
-	#miembro el usuario creado
-	$cngrupo="cn="+$linea.Grupo   #Nombre del grupo  
-	$grupoActual = [ADSI]"LDAP://$cngrupo,$rutaContenedor,$dc" #ADSI: LDAP://Nombre_grupo,ruta_del_contenedor,controlador_dominio
-	$grupoActual.Add("LDAP://$cnuser,$rutaContenedor,$dc") # Añadimos al grupo (membresía) el usuario creado haciendo uso del protocolo LDAP
-	$grupoActual.SetInfo() #Guardamos en la BD la información
+	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
+	if ( !!(Get-ADUser -filter { name -eq $nameShort }) )
+	{
+		$nameShort=$nombre+'.'+$linea.PrimerApellido+$linea.SegundoApellido
+	}
+	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort -Surname $Surnames -DisplayName $nameLarge -GivenName $name -Description "Cuenta de $nombreLargo" -EmailAddress "$email" -AccountPassword $passAccount -Enabled $true -CannotChangePassword $false -ChangePasswordAtLogon $true -PasswordNotRequired $false -Path $rutaContenedor
+	#-OtherAttributes:@{"logonHours"="192","255","1","192","255","1","192","255","1","192","255","1","192","255","1","192","255","1","192","255","1"}	
+	Add-ADGroupMember -Identity $grpAccount -Members $nameShort
 }
+
+# A continuación, las propiedades de New-ADUser que se han utilizado son:
+SamAccountName: nombre de la cuenta SAM para compatibilidad con equipos anteriores a Windows 2000.
+UserPrincipalName: Nombre opcional que puede ser más corto y fácil de recordar que el DN (Distinguished Name) y que puede ser utilizado por el sistema.
+Name: Nombre de la cuenta de usuario.
+Surname: Apellidos del usuario.
+DisplayName: Nombre del usuario que se mostrará cuando inicie sesión en un equipo.
+GivenName: Nombre de pila.
+Description: Descripción de la cuenta de usuario.
+EmailAddress: Dirección de correo electrónico.
+AccountPassword: Contraseña encriptada.
+Enabled: Cuenta habilitada ($true) o deshabilitada ($false).
+CannotChangePassword: El usuario no puede cambiar la contraseña (como antes, tiene dos valores: $true y $false).
+ChangePasswordAtLogon: Si su valor es $true obliga al usuario a cambiar la contraseña cuando vuelva a iniciar sesión.
+PasswordNotRequired: Permite que el usuario no tenga contraseña.
