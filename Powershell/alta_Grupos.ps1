@@ -1,4 +1,4 @@
-s#alta_Grupos.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo del dominio y parámetro 3 la ruta del fichero csv
+#alta_Grupos.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo del dominio y parámetro 3 la ruta del fichero csv
 
 param($a,$b,$c)
 #DC=smr,DC=local
