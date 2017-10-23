@@ -15,7 +15,7 @@
 # Windows PowerShell Script for AD DS Deployment  
 #  
 Import-Module ADDSDeployment `
-Install-ADDSDomainController 
+Install-ADDSDomainController `
 –NoGlobalCatalog:$false `
 –CreateDNSDelegation:$false `
 –Credential (Get-Credential) `
