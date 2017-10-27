@@ -1,4 +1,7 @@
 #alta_Usuarios.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 la extensión y parámetro 3 la ruta del fichero csv
+#Capturamos los 2 parámetros que hemos pasado en la ejecución del script
+# Ejemplo: alta_Usuarios.ps1 smr local 
+param($a,$b)
 
 #Primero comprobaremos si se tiene cargado el módulo Active Directory
 if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe una entrada llamada ActiveDirectory
@@ -8,11 +11,9 @@ if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe un
 #
 #Creación de los usuarios
 #
-
-param($a,$b,$c)
 #DC=smr,DC=local
 $dc="dc="+$a+",dc="+$b
-$fileUsersCsv=$c
+$fileUsersCsv=Read-Host "Introduce el fichero csv de los usuarios:"
 #
 #Los campos del fichero csv están separados por el carácter ,
 #
@@ -38,6 +39,8 @@ foreach($linea in $fichero)
 	{
 		$nameShort=$nombre+'.'+$linea.PrimerApellido+$linea.SegundoApellido
 	}
+	#El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
+	#que contiene el valor tru/false para habilitar/no habilitar el usuario y convertirlo en boolean.
 	[boolean]$Habilitado=$true
     	If($linea.Habilitado -Match 'false') { $Habilitado=$false}
 	
