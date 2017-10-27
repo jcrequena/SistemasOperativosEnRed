@@ -1,3 +1,3 @@
-Nombre:PrimerApellido:SegundoApellido:DNI:Grupo:RutaContenedor:Equipo
-User1:Apellido1:Apellido2:d12345678-A:DepInformatica:ou=Dep-Informatica:W10-CLI001
-User2:Apellido1:Apellido2:d12345679-b:DepInformatica:ou=Dep-Informatica:W10-CLI002
+Nombre:PrimerApellido:SegundoApellido:DNI:Grupo:RutaContenedor:Equipo:Habilitado
+User1:Apellido1:Apellido2:d12345678-A:DepInformatica:ou=Dep-Informatica:W10-CLI001:1
+User2:Apellido1:Apellido2:d12345679-b:DepInformatica:ou=Dep-Informatica:W10-CLI002:1
