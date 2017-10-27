@@ -38,7 +38,16 @@ foreach($linea in $fichero)
 	{
 		$nameShort=$nombre+'.'+$linea.PrimerApellido+$linea.SegundoApellido
 	}
-	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort -Surname $Surnames -DisplayName $nameLarge -GivenName $name -LogonWorkstations:$linea.Equipo -Description "Cuenta de $nameLarge" -EmailAddress "$email" -AccountPassword $passAccount -Enabled $true -CannotChangePassword $false -ChangePasswordAtLogon $true -PasswordNotRequired $false -Path $rutaContenedor
+	[boolean]$Habilitado=$true
+    	If($linea.Habilitado -Match 'false') { $Habilitado=$false}
+	
+	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort `
+		-Name $nameShort -Surname $Surnames -DisplayName $nameLarge ` 
+		-GivenName $name -LogonWorkstations:$linea.Equipo `
+		-Description "Cuenta de $nameLarge" -EmailAddress "$email" `
+		-AccountPassword $passAccount -Enabled $linea.Habilitado `
+		-CannotChangePassword $false -ChangePasswordAtLogon $true `
+		-PasswordNotRequired $false -Path $rutaContenedor
 	#Asignar cuenta de Usuario a Grupo
 	Add-ADGroupMember -Identity $grpAccount -Members $nameShort
 	
