@@ -1,2 +1,3 @@
-Cuenta:Nombre:PrimerApellido:SegundoApellido:DNI:Grupo:RutaContenedor:Equipo
-uapellido1:User1:Apellido1:Apellido2:12345678-A:DepInformatica:ou=Dep-Informatica:W10-CLI001
+Nombre:PrimerApellido:SegundoApellido:DNI:Grupo:RutaContenedor:Equipo
+User1:Apellido1:Apellido2:d12345678-A:DepInformatica:ou=Dep-Informatica:W10-CLI001
+User2:Apellido1:Apellido2:d12345679-b:DepInformatica:ou=Dep-Informatica:W10-CLI002
