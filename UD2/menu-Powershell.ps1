@@ -6,7 +6,7 @@ function mostrarMenu
      param ( 
            [string]$Titulo = 'Selección de opciones' 
      ) 
-     cls 
+     Clear-Host 
      Write-Host "================ $Titulo================" 
       
      
@@ -23,15 +23,15 @@ do
      switch ($input) 
      { 
            '1' { 
-                cls 
+                Clear-Host  
                 'Primera Opción' 
                 pause
            } '2' { 
-                cls 
+                Clear-Host  
                 'Segunda Opción' 
                 pause
            } '3' { 
-                cls 
+                Clear-Host  
                 'Tercera Opción' 
                 pause
            } 's' {
