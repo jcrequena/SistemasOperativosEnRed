@@ -1,14 +1,18 @@
-#alta_UnidadesOrg.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo y parámetro 3 la ruta del fichero csv
+#alta_UnidadesOrg.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo
 #
 #Creación de las unidades organizativas
 #
-param($a,$b,$c)
+param($a,$b)
 #DC=smr,DC=local
 $dc="dc="+$a+",dc="+$b
-$ficheroCsvUO=$c
 
+$ficheroCsvUO=Read-Host "Introduce el fichero csv de UO's:"
 $fichero = import-csv -Path $ficheroCsvUO -delimiter :
 foreach($linea in $fichero)
 {
-	New-ADOrganizationalUnit -Description:$linea.Descripcion -Name:$linea.Nombre -Path:$dc -ProtectedFromAccidentalDeletion:$true	
+	If($linea.Ruta '') { $rutaObjeto=$dc }
+	Else { $rutaObjetoUO=$linea.Ruta+","+$dc}
+	
+	New-ADOrganizationalUnit -Description:$linea.Descripcion -Name:$linea.Nombre `
+	-Path:$dc -ProtectedFromAccidentalDeletion:$true	
 }
