@@ -7,7 +7,7 @@ function Show-Menu
      param (
            [string]$Titulo = 'Menú principal'
      )
-     cls
+     Clear-Host
      Write-Host "================ $Titulo ================"
     
      Write-Host "1: Opción '1' Acción 1."
@@ -62,13 +62,13 @@ do
      switch ($input)
      {
            '1' {
-                cls
+                Clear-Host
                 #llamar a la función que haga la acción 1
            } '2' {
-                cls
+                Clear-Host
                 #llamar a la función que haga la acción 2
            } '3' {
-                cls
+                Clear-Host
                 #llamar a la función que haga la acción 2
            } 'q' {
                 'Salimos de la App'
