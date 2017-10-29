@@ -10,9 +10,9 @@ $ficheroCsvUO=Read-Host "Introduce el fichero csv de UO's:"
 $fichero = import-csv -Path $ficheroCsvUO -delimiter :
 foreach($linea in $fichero)
 {
-	If($linea.Ruta '') { $rutaObjeto=$dc }
-	Else { $rutaObjetoUO=$linea.Ruta+","+$dc}
-	
+	$rutaObjeto=$dc
+	If !($linea.Ruta -noMatch '') { $rutaObjetoUO=$linea.Ruta+","+$dc}
+
 	New-ADOrganizationalUnit -Description:$linea.Descripcion -Name:$linea.Nombre `
 	-Path:$dc -ProtectedFromAccidentalDeletion:$true	
 }
