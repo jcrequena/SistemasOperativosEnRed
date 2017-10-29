@@ -1,4 +1,5 @@
 # alta_Equipos.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo del dominio 
+#Referencia: https://technet.microsoft.com/es-es/library/hh852258(v=wps.630).aspx
 
 param($a,$b)
 #DC=smr,DC=local
