@@ -51,7 +51,10 @@ foreach($linea in $fichero)
 		-AccountPassword $passAccount -Enabled $linea.Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
 		-PasswordNotRequired $false -Path $rutaContenedor
+	
 	#Asignar cuenta de Usuario a Grupo
+	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
+	$cnGrpAccount="Cn="+$grpAccount+","+$rutaContenedor
 	Add-ADGroupMember -Identity $grpAccount -Members $nameShort
 	
 	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)      
