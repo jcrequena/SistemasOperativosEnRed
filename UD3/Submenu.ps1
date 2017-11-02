@@ -19,8 +19,10 @@ do
      {
            '1' {
                 'Opcion 1'
+                return
            } '2' {
                 'Opcion 2'
+                return
            } 
      }
 }
