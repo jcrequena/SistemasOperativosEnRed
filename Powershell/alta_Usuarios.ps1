@@ -30,7 +30,9 @@ foreach($linea in $fichero)
 	$nameShort=$linea.Nombre+'.'+$linea.PrimerApellido
 	$Surnames=$linea.PrimerApellido+' '+$linea.SegundoApellido
 	$nameLarge=$linea.Nombre+' '+$linea.PrimerApellido+' '+$linea.SegundoApellido
+	$computerAccount=$linea.Equipo
 	$email=$nameShort+"@"+$a+"."+$b
+	
 
 	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
 	if ( (Get-ADUser -filter { name -eq $nameShort }) )
@@ -42,17 +44,22 @@ foreach($linea in $fichero)
 	[boolean]$Habilitado=$true
     	If($linea.Habilitado -Match 'false') { $Habilitado=$false}
 	
-	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort `
-		-Name $nameShort -Surname $Surnames -DisplayName $nameLarge ` 
-		-GivenName $name -LogonWorkstations:$linea.Equipo `
-		-Description "Cuenta de $nameLarge" -EmailAddress "$email" `
+	#Establecer los días de expiración de la cuenta (Columna del csv ExpirationAccount)
+   	$ExpirationAccount = $linea.ExpirationAccount
+    	$timeExp = (get-date).AddDays($ExpirationAccount)
+	#
+	# Ejecutamos el comando para crear el usuario
+	#
+	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort `
+		-Surname $Surnames -DisplayName $nameLarge -GivenName $name -LogonWorkstations:$linea.Equipo `
+		-Description "Cuenta de $nameLarge" -EmailAddress $email `
 		-AccountPassword $passAccount -Enabled $Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
-		-PasswordNotRequired $false -Path $rutaContenedor
+		-PasswordNotRequired $false -Path $rutaContenedor -AccountExpirationDate $timeExp
 	
 	#Asignar cuenta de Usuario a Grupo
 	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
-	$cnGrpAccount="Cn="+$linea.Grupo+","+$rutaContenedor
+	$cnGrpAccount="Cn="+$linea.grupo+","+$rutaContenedor
 	Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 	
 	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)      
