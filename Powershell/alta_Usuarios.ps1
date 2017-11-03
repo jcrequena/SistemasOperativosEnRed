@@ -30,8 +30,6 @@ foreach($linea in $fichero)
 	$nameShort=$linea.Nombre+'.'+$linea.PrimerApellido
 	$Surnames=$linea.PrimerApellido+' '+$linea.SegundoApellido
 	$nameLarge=$linea.Nombre+' '+$linea.PrimerApellido+' '+$linea.SegundoApellido
-	$grpAccount=$linea.Grupo
-	$computerAccount=$linea.Equipo
 	$email=$nameShort+"@"+$a+"."+$b
 
 	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
@@ -54,8 +52,8 @@ foreach($linea in $fichero)
 	
 	#Asignar cuenta de Usuario a Grupo
 	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
-	$cnGrpAccount="Cn="+$grpAccount+","+$rutaContenedor
-	Add-ADGroupMember -Identity $grpAccount -Members $nameShort
+	$cnGrpAccount="Cn="+$linea.Grupo+","+$rutaContenedor
+	Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 	
 	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)      
 	[byte[]]$hoursSession = @(0,0,0,0,255,3,0,255,3,0,255,3,0,255,3,0,255,3,0,0,0)                                       
