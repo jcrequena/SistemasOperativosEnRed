@@ -46,7 +46,7 @@ foreach($linea in $fichero)
 		-Name $nameShort -Surname $Surnames -DisplayName $nameLarge ` 
 		-GivenName $name -LogonWorkstations:$linea.Equipo `
 		-Description "Cuenta de $nameLarge" -EmailAddress "$email" `
-		-AccountPassword $passAccount -Enabled $linea.Habilitado `
+		-AccountPassword $passAccount -Enabled $Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
 		-PasswordNotRequired $false -Path $rutaContenedor
 	
