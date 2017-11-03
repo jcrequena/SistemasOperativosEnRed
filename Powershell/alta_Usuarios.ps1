@@ -45,6 +45,8 @@ foreach($linea in $fichero)
     	If($linea.Habilitado -Match 'false') { $Habilitado=$false}
 	
 	#Establecer los días de expiración de la cuenta (Columna del csv ExpirationAccount)
+	#https://technet.microsoft.com/en-us/library/ee617253.aspx
+	#
    	$ExpirationAccount = $linea.ExpirationAccount
     	$timeExp = (get-date).AddDays($ExpirationAccount)
 	#
