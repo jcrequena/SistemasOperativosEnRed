@@ -33,9 +33,9 @@ foreach($linea in $fichero)
 	$email=$nameShort+"@"+$a+"."+$b
 
 	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
-	if ( !!(Get-ADUser -filter { name -eq $nameShort }) )
+	if ( !(Get-ADUser -filter { name -eq $nameShort }) )
 	{
-		$nameShort=$nombre+'.'+$linea.PrimerApellido+$linea.SegundoApellido
+		$nameShort=$linea.Nombre+'.'+$linea.PrimerApellido+$linea.SegundoApellido
 	}
 	#El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
 	#que contiene el valor tru/false para habilitar/no habilitar el usuario y convertirlo en boolean.
