@@ -2,14 +2,15 @@
 #Capturamos los 2 parámetros que hemos pasado en la ejecución del script
 # Ejemplo: alta_Usuarios-DirPersonales.ps1 smr local 
 param($a,$b)
-$dc="dc="+$a+",dc="+$b
+$dominio=$a
+$sufijo=$b
+$dc="dc="+$dominio+",dc="+$sufijo
 
 #Primero comprobaremos si se tiene cargado el módulo Active Directory
 if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe una entrada llamada ActiveDirectory
 {
   Import-Module ActiveDirectory #Se carga el módulo
 }
-
 #
 #Creación de los usuarios
 #
@@ -17,48 +18,53 @@ $fileUsersCsv=Read-Host "Introduce el fichero csv de los usuarios:"
 $fichero = import-csv -Path $fileUsersCsv -Delimiter : 			     
 foreach($linea in $fichero)
 {
-	$rutaContenedor =$linea.RutaContenedor+","+$dc 
-
+	$rutaContenedor =$linea.ContainerPath+","+$dc 
 	#Guardamos de manera segura la contraseña que en este caso corresponde al DNI-
-	$passAccount=ConvertTo-SecureString $linea.DNI -AsPlainText -force
+	$passAccount=ConvertTo-SecureString $linea.NIF -AsPlainText -force
 	
-	$name=$linea.Nombre
-	$nameShort=$linea.Nombre+'.'+$linea.PrimerApellido
-	$Surnames=$linea.PrimerApellido+' '+$linea.SegundoApellido
-	$nameLarge=$linea.Nombre+' '+$linea.PrimerApellido+' '+$linea.SegundoApellido
-	$computerAccount=$linea.Equipo
+	$name=$linea.Name
+	$nameShort=$linea.Name+'.'+$linea.Surname
+	$Surnames=$linea.Surname+' '+$linea.Surname2
+	$nameLarge=$linea.Name+' '+$linea.Surname+' '+$linea.Surname2
+	$computerAccount=$linea.Computer
 	$email=$nameShort+"@"+$a+"."+$b
 	
-
 	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
 	if (Get-ADUser -filter { name -eq $nameShort })
 	{
-		$nameShort=$linea.Nombre+'.'+$linea.PrimerApellido+$linea.SegundoApellido
+		$nameShort=$linea.Name+'.'+$linea.Surname+$linea.Surname2
 	}
 	#El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
 	#que contiene el valor true/false para habilitar/no habilitar el usuario y convertirlo en boolean.
 	[boolean]$Habilitado=$true
-  If($linea.Habilitado -Match 'false') { $Habilitado=$false}
+  	If($linea.Hability -Match 'false') { $Habilitado=$false}
   
-  $ExpirationAccount = $linea.ExpirationAccount
-  $timeExp = (get-date).AddDays($ExpirationAccount)
+  	$ExpirationAccount = $linea.DaysAccountExpire
+ 	$timeExp = (get-date).AddDays($ExpirationAccount)
 	
 	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort `
-		-Surname $Surnames -DisplayName $nameLarge -GivenName $name -LogonWorkstations:$linea.Equipo `
+		-Surname $Surnames -DisplayName $nameLarge -GivenName $name -LogonWorkstations:$linea.Computer `
 		-Description "Cuenta de $nameLarge" -EmailAddress $email `
 		-AccountPassword $passAccount -Enabled $Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
-		-PasswordNotRequired $false -Path $rutaContenedor -AccountExpirationDate $timeExp `
-    -HomeDrive "H:" -HomeDirectory $linea.DirPersonales\$nameShort" 
-	
+		-PasswordNotRequired $false -Path $rutaContenedor -AccountExpirationDate $timeExp
+		-HomeDrive "$linea.HomeDrive:" -HomeDirectory "$linea.DirPersonales\$nameShort" 	
 	#Asignar cuenta de Usuario a Grupo
 	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
-	$cnGrpAccount="Cn="+$linea.grupo+","+$rutaContenedor
+	$cnGrpAccount="Cn="+$linea.Group+","+$rutaContenedor
 	Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 	
 	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)      
 	[byte[]]$hoursSession = @(0,0,0,0,255,3,0,255,3,0,255,3,0,255,3,0,255,3,0,0,0)                                       
 	Get-ADUser -Identity $nameShort | Set-ADUser -Replace @{logonhours = $hoursSession} 
+	#
+	#Creamos el directorio personal de cada usuario con los permisos adecuados. Control Total para el usuario
+	#
+	$pathDirPersonales="$linea.HomeDrive:"+"$linea.DirPersonales\$nameShort"
+	New-Item -Path $pathDirPersonales -ItemType Directory
+	$nueva_ACL = new-object System.Security.AccessControl.FileSystemAccessRule("$dominio\$nombreCorto","FullControl","Allow")
+	$acl.AddAccessRule($nueva_ACL)
+	set-acl $pathDirPersonales $acl_actual		
 }
 
 
