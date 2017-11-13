@@ -51,8 +51,8 @@ foreach($linea in $fichero)
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
 		-PasswordNotRequired $false -Path $rutaContenedor -AccountExpirationDate $timeExp
 		-HomeDrive "$linea.HomeDrive:" -HomeDirectory "$linea.DirPersonales\$nameShort" `
-    -ProfilePath $perfilmovil `
-    -ScriptPath $linea.ScriptPath
+    		-ProfilePath $perfilmovil `
+    		-ScriptPath $linea.ScriptPath
     
 	#Asignar cuenta de Usuario a Grupo
 	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
@@ -69,15 +69,7 @@ foreach($linea in $fichero)
 	New-Item -Path $pathDirPersonales -ItemType Directory
 	$nueva_ACL = new-object System.Security.AccessControl.FileSystemAccessRule("$dominio\$nombreCorto","FullControl","Allow")
 	$acl.AddAccessRule($nueva_ACL)
-	set-acl $pathDirPersonales $acl_actual		
-  #
-	#Creamos el directorio perfil de cada usuario con los permisos adecuados. Control Total para el usuario
-	#
-  New-Item -Path E:\Dir-Perfiles\$nameShort -ItemType Directory
-  $nueva_ACL = new-object System.Security.AccessControl.FileSystemAccessRule("smr\$nameShort","FullControl","Allow")
-  $acl.AddAcessRule($nueva_ACL)
-  setacl "E:\Dir-Perfiles\$nameShort" $acl_actual
-  
+	set-acl $pathDirPersonales $acl_actual
 }
 
 
@@ -98,5 +90,5 @@ ChangePasswordAtLogon: Si su valor es $true obliga al usuario a cambiar la contr
 PasswordNotRequired: Permite que el usuario no tenga contraseña.
 HomeDrive "H:" : La carpeta personal aparecerá en la unidad de red H:
 HomeDirectory "$linea.DirPersonales\$nameShort": La carpeta personal se hallará en \\NombreServidor\Dir-Personales\Cuenta-Usuario
-ProfilePath "\\NombreServidor\Dir-Perfiles\$nombreCorto": El perfil del usuario se almacenará en \\NombreServidor\Dir-Perfiles\$nombreCorto
-ScriptPath "\\10.0.1.1\Scripts\logon": El script de inicio de sesión se halla en \\NombreServidor\Scripts\logon
+ProfilePath $perfilmovil: El perfil del usuario se almacenará en \\NombreServidor\Dir-Perfiles\$nombreCorto
+ScriptPath $linea.ScriptPath: El script de inicio de sesión se halla en \\NombreServidor\Scripts\logon
