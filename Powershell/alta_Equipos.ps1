@@ -14,8 +14,12 @@ $fichero= import-csv -Path $equiposCsv -delimiter ":"
 
 foreach($linea in $fichero)
 {
-	$pathObject=$linea.Ruta+","+$dc	 
-	New-ADComputer -Enabled:$true -Name:$linea.Equipo -Path:$pathObject -SamAccountName:$linea.Equipo
+	$pathObject=$linea.Ruta+","+$dc	
+	#Comprobamos que no exista el equipo en el sistema
+	if ( !(Get-ADComputer -Filter { name -eq $linea.Equipo }) )
+	{
+		New-ADComputer -Enabled:$true -Name:$linea.Equipo -Path:$pathObject -SamAccountName:$linea.Equipo
+	}
 }
 
 write-Host ""
