@@ -13,8 +13,12 @@ $fichero = import-csv -Path $gruposCsv -delimiter :
 foreach($linea in $fichero)
 {
 	$rutaObject=$linea.Ruta+","+$dc
-	New-ADGroup -Name:$linea.Nombre -Description:$linea.Descripcion `
-	-GroupCategory:$linea.Categoria `
-	-GroupScope:$linea.Ambito  `
-	-Path:$rutaObject	
+	#Comprobamos si no existe el grupo antes de crearlo.
+	if ( !(Get-ADGroup -Filter { name -eq $GRP }) )
+	{
+		New-ADGroup -Name:$linea.Nombre -Description:$linea.Descripcion `
+		-GroupCategory:$linea.Categoria `
+		-GroupScope:$linea.Ambito  `
+		-Path:$rutaObject
+	}
 }
