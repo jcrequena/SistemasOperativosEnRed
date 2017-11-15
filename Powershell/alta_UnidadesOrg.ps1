@@ -11,8 +11,12 @@ $fichero = import-csv -Path $ficheroCsvUO -delimiter :
 foreach($linea in $fichero)
 {
 	$rutaObjeto=$dc
-	If !($linea.Ruta -noMatch '') { $rutaObjetoUO=$linea.Ruta+","+$dc}
-
-	New-ADOrganizationalUnit -Description:$linea.Descripcion -Name:$linea.Nombre `
-	-Path:$dc -ProtectedFromAccidentalDeletion:$true	
+	#Si el campo Ruta no está vacío, componemos la ruta con el valor del campo más el dn del dominio.
+	if !($linea.Ruta -noMatch '') { $rutaObjetoUO=$linea.Ruta+","+$dc}
+	#Comprobamos que la OU no exista ya en el sistema
+	if ( !(Get-ADOrganizationalUnit -Filter { name -eq $UO }) )
+	{
+        	New-ADOrganizationalUnit -Description:$linea.Descripcion -Name:$linea.Nombre `
+		-Path:$dc -ProtectedFromAccidentalDeletion:$true
+        }	
 }
