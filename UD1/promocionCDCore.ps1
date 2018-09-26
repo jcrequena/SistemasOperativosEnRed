@@ -2,16 +2,20 @@
 # Script de Windows PowerShell para implementación de AD DS
 #
 
+$dominioFQDN = "DC2012R2.ES"
+$dominioNETBIOS = "DC2012R2"
+$adminPass = "sor-smr2018."
 Import-Module ADDSDeployment
 Install-ADDSForest `
--CreateDnsDelegation:$false `
+-CreateDnsDelegation:$False `
 -DatabasePath "C:\Windows\NTDS" `
 -DomainMode "Win2012R2" `
--DomainName "DC2012R2.ES" `
--DomainNetbiosName "DC2012R2" `
+-DomainName $dominioFQDN `
+-DomainNetbiosName $dominioNETBIOS `
+-SafeModeAdministratorPassword (ConvertTo-SecureString -string $adminPass -AsPlainText -Force)
 -ForestMode "Win2012R2" `
--InstallDns:$true `
+-InstallDns:$True `
 -LogPath "C:\Windows\NTDS" `
--NoRebootOnCompletion:$false `
+-NoRebootOnCompletion:$False `
 -SysvolPath "C:\Windows\SYSVOL" `
--Force:$true
+-Force:$True off
