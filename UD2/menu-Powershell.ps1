@@ -33,11 +33,15 @@ function mostrarMenu
      Write-Host "3) Tercera Opción" 
      Write-Host "S) Presiona 'S' para salir" 
 }
-
+#Bucle principal del Script. El bucle se ejecuta de manera infinita hasta que se cumple
+#la condición until ($input -eq 's'), es decir, hasta que se pulse la tecla s.
 do 
 { 
+     #Llamamos a la función mostrarMenu, para dibujar el menú de opciones por pantalla
      mostrarMenu 
+     #Recogemos en la varaible input, el valor que el usuario escribe por teclado (opción del menú)
      $input = Read-Host "Elegir una Opción" 
+     #https://ss64.com/ps/switch.html
      switch ($input) 
      { 
            '1' { 
@@ -55,7 +59,12 @@ do
            } 's' {
                 'Saliendo del script...'
                 return 
-           }  
+           } 
+           #Si no se selecciona una de las opciones del menú, es decir, se pulsa algun carácter
+           #que no sea 1, 2, 3 o s, sacamos por pantalla un aviso e indicamos lo que hay que realizar.
+           default { 
+              'Por favor, Pulse una de las opciones disponibles [1-3] o s para salir'
+           }
      } 
      pause 
 } 
