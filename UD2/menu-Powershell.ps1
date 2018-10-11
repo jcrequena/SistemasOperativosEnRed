@@ -2,8 +2,11 @@
 
 #Paso de parámetros al ejecutar el script en la consola
 #Este script recoje 2 parámetros en la llamada del mismo en la consola. 
-#La ejecución del script será: ./menu.ps1 param1 param2
-#Los parámetros son opcionales, si la llamada es:./menu.ps1 los valores de $Param1 y $Param2, será la cadena de texto vacía.
+#La ejecución del script será puede ser de dos formas:
+#./menu.ps1 param1 param2
+#o 
+#./menu.ps1 -Param1 parametro1 -Param2 parametro2
+#Los parámetros son opcionales, si la llamada es:./menu.ps1 --> los valores de $Param1 y $Param2, será la cadena de texto vacía.
 Param(
   [string]$Param1,
   [string]$Param2
