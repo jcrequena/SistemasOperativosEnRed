@@ -14,25 +14,10 @@
 #  
 # Windows PowerShell Script for AD DS Deployment  
 #  
-Import-Module ADDSDeployment `
-Install-ADDSDomainController `
-–NoGlobalCatalog:$false `
-–CreateDNSDelegation:$false `
-–Credential (Get-Credential) `
-–CriticalReplicationOnly:$false `
-–DatabasePath “C:\Windows\NTDS” `
-–DomainName “smr.local” `
-–InstallDNS:$True `
-–LogPath “C:\Windows\NTDS” `
-–NoRebootOnCompletion:$False `
--ReplicationSourceDC "srv-2012R2D-FSMO.smr.local" `
-–SiteName “Default-First-Site-Name” `
-–SysVolPath “C:\Windows\SYSVOL” `
--Force:$true
+Import-Module ADDSDeployment Install-ADDSDomainController –NoGlobalCatalog:$false –CreateDNSDelegation:$False –Credential (Get-Credential) –CriticalReplicationOnly:$False –DatabasePath “C:\Windows\NTDS” –DomainName “smr.local” –InstallDNS:$True –LogPath “C:\Windows\NTDS” –NoRebootOnCompletion:$False -ReplicationSourceDC "srv-2012R2D-FSMO.smr.local" –SiteName “Default-First-Site-Name” –SysVolPath “C:\Windows\SysVol” -Force:$true
 
 # Para ver el significado de cada parámetro del cmdlet ir a: 
 #https://technet.microsoft.com/es-es/library/hh974723(v=wps.630).aspx
-
 
 # NOTA: srv-2012R2D-FSMO es el nombre del equipo servidor maestro de operaciones
 
