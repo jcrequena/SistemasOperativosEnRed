@@ -10,3 +10,4 @@ if (!(Get-Module -Name ADDSDeployment)) #Se comprueba si se tiene cargado el mó
   Import-Module ADDSDeployment #Se carga el módulo
 }
 Install-ADDSDomain -NoGlobalCatalog:$false -CreateDnsDelegation:$true -Credential (Get-Credential) -DatabasePath "C:\Windows\NTDS" -DomainMode "Win2012R2" -DomainType "ChildDomain" -InstallDns:$true -LogPath "C:\Windows\NTDS" -NewDomainName "sor" -NewDomainNetbiosName "SOR" -ParentDomainName "smr.local" -NoRebootOnCompletion:$false -SiteName "Default-First-Site-Name" -SysvolPath "C:\Windows\SYSVOL" -Force:$true
+#-Force:$true fuerza la instalación sin preguntar al usuario.
