@@ -11,6 +11,7 @@
 
 # Enlace al vídeo explicativo del proceso: https://youtu.be/oMtheS4Xa-c
 
+#Referencia: AD DS Deployment Cmdlets in Windows PowerShell: https://technet.microsoft.com/es-es/library/hh974719(v=wps.630).aspx
 #  
 # Windows PowerShell Script for AD DS Deployment  
 #  
