@@ -54,9 +54,12 @@ foreach($linea in $fichero)
 	$cnGrpAccount="Cn="+$linea.Group+","+$rutaContenedor
 	Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 	
-	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)      
-	[byte[]]$hoursSession = @(0,0,0,0,255,3,0,255,3,0,255,3,0,255,3,0,255,3,0,0,0)                                       
-	Get-ADUser -Identity $nameShort | Set-ADUser -Replace @{logonhours = $hoursSession} 
+	#
+	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)   
+	# Para ello, importamos una utilidad (Set-OSCLogonHours) que nos permite establecer el horario
+	#
+	Import-Module C:\Scripts\LogonHours\SetADUserLogonTime.psm1
+	Set-OSCLogonHours -SamAccountName $nameShort -DayofWeek Monday,Tuesday,Wednesday,Thursday,Friday -From 8AM -To 6PM
 	#
 	#Creamos el directorio personal de cada usuario con los permisos adecuados. Control Total para el usuario
 	#
