@@ -1,5 +1,8 @@
 # Importamos el módulo ADDS
-Import-Module ADDSDeployment
+if (!(Get-Module -Name ADDSDeployment)) #Se comprueba si se tiene cargado el módulo
+{
+  Import-Module ADDSDeployment #Se carga el módulo
+}
 
 # Despromocionamos el dominio/subdominio
 # DemoteOperationMasterRole indica que la degradación debe continuar incluso si se trata del maestro de operaciones del directorio activo.
