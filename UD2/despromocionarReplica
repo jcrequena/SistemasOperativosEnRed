@@ -1,0 +1,8 @@
+#To clean up server metadata by using Ntdsutil
+#Open a command prompt as an administrator
+c:\ntdsutil
+metadata cleanup #Initiates removal of objects that refer to a decommissioned domain controller.
+remove selected server <ServerName> #Removes objects for a specified, decommissioned domain controller from a specified server.
+
+
+#Referencia: https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc816907(v=ws.10)#bkmk_graphical?ranMID=24542&ranEAID=TnL5HPStwNw&ranSiteID=TnL5HPStwNw-C_Yw5u7yccDhL6GulKCkww&epi=TnL5HPStwNw-C_Yw5u7yccDhL6GulKCkww
