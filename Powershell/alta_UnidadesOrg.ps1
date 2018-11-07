@@ -43,5 +43,6 @@ foreach($line in $fichero)
 	{
         	New-ADOrganizationalUnit -Description:$line.Description -Name:$line.Name `
 		-Path:$rutaObjetoUO -ProtectedFromAccidentalDeletion:$true
-        }	
+        }
+	else { Write-Host "La unidad organizativa $line.Name ya existe en el sistema"}
 }
