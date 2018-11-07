@@ -1,10 +1,12 @@
 #alta_Usuarios-DirPersonales.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 la extensión
 #Capturamos los 2 parámetros que hemos pasado en la ejecución del script
 # Ejemplo: alta_Usuarios-DirPersonales.ps1 smr local 
-param($a,$b)
-$dominio=$a
-$sufijo=$b
-$dc="dc="+$dominio+",dc="+$sufijo
+param($dominio,$sufifoDominio)
+
+#Componemos el Domain Component para el dominio que se pasa por parámetro
+# en este caso, el dominio es smr.local
+#Por lo que hay que componer dc=smr,dc=local
+$domainComponent="dc="+$dominio+",dc="+$sufifoDominio
 
 #Primero comprobaremos si se tiene cargado el módulo Active Directory
 if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe una entrada llamada ActiveDirectory
@@ -18,7 +20,7 @@ $fileUsersCsv=Read-Host "Introduce el fichero csv de los usuarios:"
 $fichero = import-csv -Path $fileUsersCsv -Delimiter : 			     
 foreach($linea in $fichero)
 {
-	$rutaContenedor =$linea.ContainerPath+","+$dc 
+	$rutaContenedor =$linea.ContainerPath+","+$domainComponent
 	#Guardamos de manera segura la contraseña que en este caso corresponde al DNI-
 	$passAccount=ConvertTo-SecureString $linea.NIF -AsPlainText -force
 	
@@ -27,7 +29,7 @@ foreach($linea in $fichero)
 	$Surnames=$linea.Surname+' '+$linea.Surname2
 	$nameLarge=$linea.Name+' '+$linea.Surname+' '+$linea.Surname2
 	$computerAccount=$linea.Computer
-	$email=$nameShort+"@"+$a+"."+$b
+	$email=$nameShort+"@"+$dominio+"."+$sufifoDominio
 	
 	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
 	if (Get-ADUser -filter { name -eq $nameShort })
