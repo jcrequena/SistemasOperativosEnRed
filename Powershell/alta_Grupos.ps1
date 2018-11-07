@@ -1,8 +1,11 @@
 #alta_Grupos.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo del dominio
 #Referencia: https://technet.microsoft.com/en-us/library/ee617258.aspx
-param($a,$b)
-#DC=smr,DC=local
-$dc="dc="+$a+",dc="+$b
+param($dominio,$sufifoDominio)
+
+#Componemos el Domain Component para el dominio que se pasa por parámetro
+# en este caso, el dominio es smr.local
+#Por lo que hay que componer dc=smr,dc=local
+$domainComponent="dc="+$dominio+",dc="+$sufifoDominio
 
 #
 #Creación de los grupos a partir de un fichero csv
@@ -12,13 +15,14 @@ $gruposCsv=Read-Host "Introduce el fichero csv de Grupos:"
 $fichero = import-csv -Path $gruposCsv -delimiter :
 foreach($linea in $fichero)
 {
-	$rutaObject=$linea.Ruta+","+$dc
+	$pathObject=$linea.Path+","+$domainComponent
 	#Comprobamos si no existe el grupo antes de crearlo.
 	if ( !(Get-ADGroup -Filter { name -eq $GRP }) )
 	{
-		New-ADGroup -Name:$linea.Nombre -Description:$linea.Descripcion `
-		-GroupCategory:$linea.Categoria `
-		-GroupScope:$linea.Ambito  `
-		-Path:$rutaObject
+		New-ADGroup -Name:$linea.Name -Description:$linea.Description `
+		-GroupCategory:$linea.Category `
+		-GroupScope:$linea.Scope  `
+		-Path:$pathObject
 	}
+	else { Write-Host "El grupo $line.Name ya existe en el sistema"}
 }
