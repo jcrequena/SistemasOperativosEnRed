@@ -3,11 +3,11 @@
 #Name:FirstName:LastName:DNI:Group:ContainerPath:Computer:ExpirationAccount:Group:Enabled
 #Capturamos los 2 parámetros que hemos pasado en la ejecución del script
 # Ejemplo: alta_Usuarios.ps1 smr local 
-param($dominio,$sufifoDominio)
+param($dominio,$sufijoDominio)
 #Componemos el Domain Component para el dominio que se pasa por parámetro
 # en este caso, el dominio es smr.local
 #Por lo que hay que componer dc=smr,dc=local
-$domainComponent="dc="+$dominio+",dc="+$sufifoDominio
+$domainComponent="dc="+$dominio+",dc="+$sufijoDominio
 
 #Primero comprobaremos si se tiene cargado el módulo Active Directory
 if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe una entrada llamada ActiveDirectory
