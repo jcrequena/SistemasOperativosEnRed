@@ -1,3 +1,3 @@
-Name:FirstName:LastName:DNI:Group:ContainerPath:Computer:Enabled
-User1:Apellido1:Apellido2:d12345678-A:DepInformatica:ou=Dep-Informatica:W10-CLI001:true
-User2:Apellido1:Apellido2:d12345679-b:DepInformatica:ou=Dep-Informatica:W10-CLI002:false
+Name:FirstName:LastName:DNI:Group:ContainerPath:Computer:ExpirationAccount:Group:Enabled
+User1:Apellido1:Apellido2:d12345678-A:DepInformatica:ou=Dep-Informatica:W10-CLI001:10:Grupo1:true
+User2:Apellido1:Apellido2:d12345679-b:DepInformatica:ou=Dep-Informatica:W10-CLI002:15:Grupo2:false
