@@ -35,6 +35,8 @@ foreach($line in $fichero)
 	#Con este if condicional, comprobamos si el campo Path del objeto $linea no está vacío.
 	#Si no está vacío, componemos la ruta con el valor del campo más el Domain Component. De esta forma
 	#componemos el path (ruta) de la unidad organizativa, es decir, su ubicación en el árbol del dominio
+	#Si está vacío,guardamos en la variable $pathObjectUO, el contenido de la variable $domainComponent 
+	#que hemos compuesto al inicio  del script y que contiene el Domain Component
 	if !($line.Path -noMatch '') { $pathObjectUO=$line.Path+","+$domainComponent}
 	else {$pathObjectUO=$domainComponent}
 	#Antes de crear la OU, primero comprobamos que no exista en el sistema, para ello,
