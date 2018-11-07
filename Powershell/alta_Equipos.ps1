@@ -1,5 +1,12 @@
 # alta_Equipos.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo del dominio 
 #Referencia: https://technet.microsoft.com/es-es/library/hh852258(v=wps.630).aspx
+#Para este caso de ejemplo, usamos el csv que contiene lo siguiente
+#Computer:Path
+#W10-CLI001:OU=Equipos-DepInf,OU=Dep-Informatica
+#W10-CLI002:OU=Equipos-DepInf,OU=Dep-Informatica
+#Es decir, queremos crear los equipos, en la OU Equipos-DepInf que esta dentro de la OU Dep-Informatica
+#Por lo tanto para crear el equipo en esa ruta sobre el dominio smr.local quedaría así:
+#OU=Equipos-DepInf,OU=Dep-Informatica,DC=smr,DC=local
 
 param($dominio,$sufijoDominio)
 
