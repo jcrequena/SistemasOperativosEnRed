@@ -35,14 +35,14 @@ foreach($line in $fichero)
 	#Con este if condicional, comprobamos si el campo Path del objeto $linea no está vacío.
 	#Si no está vacío, componemos la ruta con el valor del campo más el Domain Component. De esta forma
 	#componemos el path (ruta) de la unidad organizativa, es decir, su ubicación en el árbol del dominio
-	if !($line.Path -noMatch '') { $rutaObjetoUO=$line.Path+","+$domainComponent}
-	else {$rutaObjetoUO=$domainComponent}
+	if !($line.Path -noMatch '') { $pathObjectUO=$line.Path+","+$domainComponent}
+	else {$pathObjectUO=$domainComponent}
 	#Antes de crear la OU, primero comprobamos que no exista en el sistema, para ello,
 	#hacemos uso del if condicional
 	if ( !(Get-ADOrganizationalUnit -Filter { name -eq $line.Name }) )
 	{
         	New-ADOrganizationalUnit -Description:$line.Description -Name:$line.Name `
-		-Path:$rutaObjetoUO -ProtectedFromAccidentalDeletion:$true
+		-Path:$pathObjectUO -ProtectedFromAccidentalDeletion:$true
         }
 	else { Write-Host "La unidad organizativa $line.Name ya existe en el sistema"}
 }
