@@ -1,6 +1,6 @@
 #alta_Usuarios.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 la extensión y parámetro 3 la ruta del fichero csv
 #El fichero csv usado tiene estos campos/columnas
-#Name:FirstName:LastName:DNI:Group:ContainerPath:Computer:Enabled:ExpirationAccount
+#Name:FirstName:LastName:DNI:Group:ContainerPath:Computer:ExpirationAccount:Group:Enabled
 #Capturamos los 2 parámetros que hemos pasado en la ejecución del script
 # Ejemplo: alta_Usuarios.ps1 smr local 
 param($dominio,$sufifoDominio)
