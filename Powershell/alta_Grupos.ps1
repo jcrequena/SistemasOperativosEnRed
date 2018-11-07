@@ -1,11 +1,11 @@
 #alta_Grupos.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo del dominio
 #Referencia: https://technet.microsoft.com/en-us/library/ee617258.aspx
-param($dominio,$sufifoDominio)
+param($dominio,$sufijoDominio)
 
 #Componemos el Domain Component para el dominio que se pasa por parámetro
 # en este caso, el dominio es smr.local
 #Por lo que hay que componer dc=smr,dc=local
-$domainComponent="dc="+$dominio+",dc="+$sufifoDominio
+$domainComponent="dc="+$dominio+",dc="+$sufijoDominio
 
 #
 #Creación de los grupos a partir de un fichero csv
