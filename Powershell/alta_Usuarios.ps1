@@ -1,7 +1,13 @@
 #alta_Usuarios.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 la extensión y parámetro 3 la ruta del fichero csv
+#El fichero csv usado tiene estos campos/columnas
+#Name:FirstName:LastName:DNI:Group:ContainerPath:Computer:Enabled:ExpirationAccount
 #Capturamos los 2 parámetros que hemos pasado en la ejecución del script
 # Ejemplo: alta_Usuarios.ps1 smr local 
-param($a,$b)
+param($dominio,$sufifoDominio)
+#Componemos el Domain Component para el dominio que se pasa por parámetro
+# en este caso, el dominio es smr.local
+#Por lo que hay que componer dc=smr,dc=local
+$domainComponent="dc="+$dominio+",dc="+$sufifoDominio
 
 #Primero comprobaremos si se tiene cargado el módulo Active Directory
 if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe una entrada llamada ActiveDirectory
@@ -11,8 +17,6 @@ if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe un
 #
 #Creación de los usuarios
 #
-#DC=smr,DC=local
-$dc="dc="+$a+",dc="+$b
 $fileUsersCsv=Read-Host "Introduce el fichero csv de los usuarios:"
 #
 #Los campos del fichero csv están separados por el carácter ,
@@ -21,28 +25,27 @@ $fichero = import-csv -Path $fileUsersCsv -Delimiter :
 						     
 foreach($linea in $fichero)
 {
-	$rutaContenedor =$linea.RutaContenedor+","+$dc #Ruta donde se creará el usuario
+	$containerPath =$linea.ContainerPath+","+$domainComponent #Ruta donde se creará el usuario
 
 	#Guardamos de manera segura la contraseña que en este caso corresponde al DNI-
 	$passAccount=ConvertTo-SecureString $linea.DNI -AsPlainText -force
 	
-	$name=$linea.Nombre
-	$nameShort=$linea.Nombre+'.'+$linea.PrimerApellido
-	$Surnames=$linea.PrimerApellido+' '+$linea.SegundoApellido
-	$nameLarge=$linea.Nombre+' '+$linea.PrimerApellido+' '+$linea.SegundoApellido
-	$computerAccount=$linea.Equipo
-	$email=$nameShort+"@"+$a+"."+$b
+	
+	$nameShort=$linea.Name+'.'+$linea.FirstName
+	$Surnames=$linea.FirstName+' '+$linea.LastName
+	$nameLarge=$linea.Name+' '+$linea.FirstName+' '+$linea.LastName
+	$email=$nameShort+"@"+$dominio+"."+$sufifoDominio
 	
 
 	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
 	if (Get-ADUser -filter { name -eq $nameShort })
 	{
-		$nameShort=$linea.Nombre+'.'+$linea.PrimerApellido+$linea.SegundoApellido
+		$nameShort=$linea.Name+'.'+$linea.FirstName+$linea.LastName
 	}
 	#El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
 	#que contiene el valor tru/false para habilitar/no habilitar el usuario y convertirlo en boolean.
 	[boolean]$Habilitado=$true
-    	If($linea.Habilitado -Match 'false') { $Habilitado=$false}
+    	If($linea.Enabled -Match 'false') { $Habilitado=$false}
 	
 	#Establecer los días de expiración de la cuenta (Columna del csv ExpirationAccount)
 	#https://technet.microsoft.com/en-us/library/ee617253.aspx
@@ -53,28 +56,23 @@ foreach($linea in $fichero)
 	# Ejecutamos el comando para crear el usuario
 	#
 	New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort `
-		-Surname $Surnames -DisplayName $nameLarge -GivenName $name -LogonWorkstations:$linea.Equipo `
+		-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name -LogonWorkstations:$linea.Computer `
 		-Description "Cuenta de $nameLarge" -EmailAddress $email `
 		-AccountPassword $passAccount -Enabled $Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
-		-PasswordNotRequired $false -Path $rutaContenedor -AccountExpirationDate $timeExp
-	
+		-PasswordNotRequired $false -Path $containerPath -AccountExpirationDate $timeExp
 	#Asignar cuenta de Usuario a Grupo
 	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
-	$cnGrpAccount="Cn="+$linea.grupo+","+$rutaContenedor
+	$cnGrpAccount="Cn="+$linea.Group+","+$containerPath
 	Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
+	#
+	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)   
+	# Para ello, importamos una utilidad (Set-OSCLogonHours) que nos permite establecer el horario
+	#
+	Import-Module C:\Scripts\LogonHours\SetADUserLogonTime.psm1
+	Set-OSCLogonHours -SamAccountName $nameShort -DayofWeek Monday,Tuesday,Wednesday,Thursday,Friday -From 8AM -To 6PM
 	
-	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)      
-	[byte[]]$hoursSession = @(0,0,0,0,255,3,0,255,3,0,255,3,0,255,3,0,255,3,0,0,0)                                       
-	Get-ADUser -Identity $nameShort | Set-ADUser -Replace @{logonhours = $hoursSession} 
 }
-
-#Ejemplos de establecer vector de inicios de sesión
-# Deny all logon
-# [byte[]]$hours = @(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-
-# Allow logon at all hours
-# [byte[]]$hours = @(255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255)
 
 # A continuación, las propiedades de New-ADUser que se han utilizado son:
 SamAccountName: nombre de la cuenta SAM para compatibilidad con equipos anteriores a Windows 2000.
