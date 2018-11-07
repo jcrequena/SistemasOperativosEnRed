@@ -34,7 +34,7 @@ foreach($linea in $fichero)
 	$nameShort=$linea.Name+'.'+$linea.FirstName
 	$Surnames=$linea.FirstName+' '+$linea.LastName
 	$nameLarge=$linea.Name+' '+$linea.FirstName+' '+$linea.LastName
-	$email=$nameShort+"@"+$dominio+"."+$sufifoDominio
+	$email=$nameShort+"@"+$dominio+"."+$sufijoDominio
 	
 
 	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
