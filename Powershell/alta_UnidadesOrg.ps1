@@ -11,7 +11,7 @@ param($dominio,$sufifoDominio)
 #Componemos el Domain Component para el dominio que se pasa por parámetro
 # en este caso, el dominio es smr.local
 #Por lo que hay que componer dc=smr,dc=local
-$domainComponent="dc="+$dominio+",dc="+$sufifoDominio
+$domainComponent="dc="+$dominio+",dc="+$sufijoDominio
 
 #Solicitamos por pantalla al usuario el fichero csv y guardamos el valor en la variable $ficheroCsvUO
 #Ejemplo, el usuario introduce el fichero con la ruta donde se encuentra el mismo: C:\ficherosCsv\unidadesOrgnizativasSMR.csv
