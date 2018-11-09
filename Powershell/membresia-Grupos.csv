@@ -2,8 +2,11 @@
 #El primer campo es el nombre del grupo que existe en el servidor (grupos por defecto)
 #El segundo campo es la descripción del grupo
 #El tercer campo, es el grupo que vamos a añadir a el grupo (primer campo), es decir, el grupo de este campo es miembro del grupo
-#del primer campo
-Name:Description:Group
-Operadores de copia de seguridad:Los operadores de copia de seguridad pueden invalidar restricciones de seguridad con el único propósito de hacer copias de seguridad o restaurar archivos.:GG_Admin-Parciales1
-Usuarios del monitor de sistema:Los miembros de este grupo tienen acceso a los datos del contador de rendimiento de forma local y remota.:GG_Admin-Parciales2
-Opers. de impresión:Los miembros pueden administrar impresoras instaladas en controladores de dominio:ADM:GG_Admin-Parciales1
+#del primer campo. Hay que poner todo el FQDN del grupo (la ruta done está)
+#El comando para añdir un grupo a otro es:
+#Add-ADGroupMember -Identity $line.Name -Members $line.GroupMember
+
+Name:Description:PathGroupMember
+Operadores de copia de seguridad:Los operadores de copia de seguridad pueden invalidar restricciones de seguridad con el único propósito de hacer copias de seguridad o restaurar archivos.:CN=SMR_GG_admins_parcial_1,OU=Administradores parciales,DC=smr,DC=local
+Usuarios del monitor de sistema:Los miembros de este grupo tienen acceso a los datos del contador de rendimiento de forma local y remota.:CN=SMR_GG_admins_parcial_2,OU=Administradores parciales,DC=smr,DC=local
+Opers. de impresión:Los miembros pueden administrar impresoras instaladas en controladores de dominio:ADM:CN=SMR_GG_admins_parcial_1,OU=Administradores parciales,DC=smr,DC=local
