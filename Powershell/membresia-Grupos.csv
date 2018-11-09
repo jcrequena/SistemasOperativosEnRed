@@ -7,5 +7,5 @@
 
 Name:PathGroupMember
 Opers. de cuentas:CN=SMR_GG_admins_parcial_1,OU=Administradores parciales,DC=smr,DC=local
-Opers. de impresión:CN=SMR_GG_admins_parcial_2,OU=Administradores parciales,DC=smr,DC=local
 DnsAdmins:ADM:CN=SMR_GG_admins_parcial_1,OU=Administradores parciales,DC=smr,DC=local
+Opers. de impresión:CN=SMR_GG_admins_parcial_2,OU=Administradores parciales,DC=smr,DC=local
