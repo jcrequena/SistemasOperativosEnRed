@@ -1,5 +1,5 @@
 # Change following parameters
-$strRemoteForest = "daw.local" #Dominio al que hemos creado una relación de confianza
+$strRemoteForest = "smr.local" #Dominio al que hemos creado una relación de confianza
 $strRemoteAdmin = "adminAccountName"
 $strRemoteAdminPassword = "Heslo@123"
 
