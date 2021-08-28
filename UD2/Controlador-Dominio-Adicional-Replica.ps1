@@ -1,7 +1,7 @@
 #Referencia
 # https://docs.microsoft.com/es-es/windows-server/identity/ad-ds/deploy/install-a-replica-windows-server-2012-domain-controller-in-an-existing-domain--level-200-#BKMK_PS
 # https://msdn.microsoft.com/es-es/library/jj574134(v=ws.11).aspx
-# Este comando promociona un equipo Windows Server R2 Datacenter a controlador de dominio adicional (réplica) en el Controlador
+# Este comando promociona un equipo Windows Server a controlador de dominio adicional (réplica) en el Controlador
 # del dominio existente smr.local.
 # Este nuevo CD haría las veces de réplica o balenceo de cargas.
 # Antes de ejecutar el script debes realizar:
@@ -34,9 +34,9 @@ if (!(Get-Module -Name ADDSDeployment)) #Se comprueba si se tiene cargado el mó
   Import-Module ADDSDeployment #Se carga el módulo
 }
 #
-#4. Ahora, podemos pasar a promocionar el servidor a controlador de dominio adicional (réplica)
+#4. Ahora, podemos pasar a promocionar el servidor a controlador de dominio adicional (réplica). El servidor se llama orion.
 #
-Install-ADDSDomainController -DomainName "smr.local" –Credential (Get-Credential) –SiteName “Default-First-Site-Name” –InstallDNS:$True –NoGlobalCatalog:$false -CreateDNSDelegation:$false -ReplicationSourceDC "srv-2012R2D-FSMO.smr.local" –CriticalReplicationOnly:$False –DatabasePath “C:\Windows\NTDS” –LogPath “C:\Windows\NTDS” –SysVolPath “C:\Windows\SysVol” –NoRebootOnCompletion:$False -Force:$true
+Install-ADDSDomainController -DomainName "smr.local" –Credential (Get-Credential) –SiteName “Default-First-Site-Name” –InstallDNS:$True –NoGlobalCatalog:$false -CreateDNSDelegation:$false -ReplicationSourceDC "orion.smr.local" –CriticalReplicationOnly:$False –DatabasePath “C:\Windows\NTDS” –LogPath “C:\Windows\NTDS” –SysVolPath “C:\Windows\SysVol” –NoRebootOnCompletion:$False -Force:$true
 
 #Descripción de los parámetros
 #
@@ -58,5 +58,5 @@ Install-ADDSDomainController -DomainName "smr.local" –Credential (Get-Credenti
 
 # Para ver el significado oficial de cada parámetro del cmdlet acceder a: https://technet.microsoft.com/es-es/library/hh974723(v=wps.630).aspx
 
-# NOTA: srv-2012R2D-FSMO es el nombre del equipo servidor maestro de operaciones
+# NOTA: orion es el nombre del equipo servidor maestro de operaciones.
 
