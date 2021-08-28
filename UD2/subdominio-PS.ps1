@@ -18,4 +18,4 @@ Install-ADDSDomain
 # nos solicitará introducir la contraseña del administrador del dominio raíz y la del DSRM, después se reiniciará el servidor.
 Install-ADDSDomain 
   –Credential (Get-Credential smr\administrador) 
-    –NewDomainName dominio-arbol.local –ParentDomainName smr.local –DomainType TreeDomain –InstallDNS
+    –NewDomainName sor.local –ParentDomainName smr.local –DomainType TreeDomain –InstallDNS
