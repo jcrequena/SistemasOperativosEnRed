@@ -14,6 +14,12 @@ Param(
 Write-Host "Los parámetros son:"$Param1 " " $Param2
 pause
 
+#Función 1. Promocionar a CD
+function promocionarCD
+{
+Write-Host "Ejecuto el comando CD"
+}
+
 #Función que nos muestra un menú por pantalla con 3 opciones y una última para salir del mismo
 # La función “mostrarMenu”, puede tomar como parámetro un título y devolverá por pantalla 
 # "================ $Titulo================" , donde $Titulo será el título pasado por parámetro.
