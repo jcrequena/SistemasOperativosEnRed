@@ -2,10 +2,10 @@ Import-Module ADDSDeployment
 Install-ADDSForest `
 -CreateDnsDelegation:$false `
 -DatabasePath "C:\Windows\NTDS" `
--DomainMode "Win2012R2" `
+-DomainMode "Default" `
 -DomainName "smr.local" `
 -DomainNetbiosName "smr" `
--ForestMode "Win2012R2" `
+-ForestMode "Default" `
 -InstallDns:$true `
 -LogPath "C:\Windows\NTDS" `
 -NoRebootOnCompletion:$false `
