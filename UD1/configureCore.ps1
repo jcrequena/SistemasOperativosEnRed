@@ -12,6 +12,7 @@ Set-DnsClientServerAddress -InterfaceIndex 2 -ServerAddresses 192.168.1.1
 
 #NOTA:Si se tiene sólo 1 interfaz de red el comando se puede simplificar
 New-NetIPAddress –IPAddress 192.168.1.20 -DefaultGateway 192.168.1.1 -PrefixLength 24 -InterfaceIndex (Get-NetAdapter).InterfaceIndex
+Set-DNSClientServerAddress –InterfaceIndex (Get-NetAdapter).InterfaceIndex –ServerAddresses 192.168.1.20
 
 #Cambiar el nombre del equipo (el nuevo nombre será orion)
 Rename-Computer -NewName orion
