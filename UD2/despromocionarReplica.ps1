@@ -31,4 +31,6 @@ Uninstall-ADDSDomainController-ForceRemoval:$true -Force:$true
 Uninstall-WindowsFeature -Name AD-Domain-Services, DNS -Confirm:$false
 
 
-#Referencia: https://blog.ragasys.es/eliminar-controlador-de-dominio-adicional-sobre-ms-windows-server-2016
+#Referencias: 
+#https://blog.ragasys.es/eliminar-controlador-de-dominio-adicional-sobre-ms-windows-server-2016
+#https://docs.microsoft.com/es-es/windows-server/identity/ad-ds/deploy/demoting-domain-controllers-and-domains--level-200-
