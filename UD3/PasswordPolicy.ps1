@@ -10,7 +10,7 @@
 #             Por ejemplo, si PasswordPolicy1 tiene un valor de propiedad de Precedence de 200 y 
 #             PasswordPolicy2 tiene un valor de propiedad de Precedence de 100, se usa PasswordPolicy2.
 
-# Creamos las política de contraseñas
+# Creamos las política de contraseñas (el nombre del servidor es orion)
 #
 New-ADFineGrainedPasswordPolicy `
       -ComplexityEnabled:$true `
@@ -24,13 +24,13 @@ New-ADFineGrainedPasswordPolicy `
       -PasswordHistoryCount:"24" `
       -Precedence:"1" `
       -ReversibleEncryptionEnabled:$false `
-      -Server:"srv-2012R2D-FSMO.smr.local"
+      -Server:"orion.smr.local"
 
-# Creamos el objeto
+# Creamos el objeto (el nombre del servidor es orion)
 Set-ADObject -Identity:"CN=UsersDepInf-15,CN=Password Settings Container,CN=System,DC=smr,DC=local"  `
-              -ProtectedFromAccidentalDeletion:$true -Server:"srv-2012R2D-FSMO.smr.local"
+              -ProtectedFromAccidentalDeletion:$true -Server:"orion.smr.local"
 
-# Asociamos la política al grupo 
+# Asociamos la política al grupo (el nombre del servidor es orion)
 Add-ADFineGrainedPasswordPolicySubject -Identity:"CN=UsersDepInf-15,CN=Password Settings Container,CN=System,DC=smr,DC=local" `
-        -Server:"srv-2012R2D-FSMO.smr.local" `
+        -Server:"orion.smr.local" `
         -Subjects:"CN=SMR-GG-DepInf-15,OU=Dep-Informatica,DC=smr,DC=local"
