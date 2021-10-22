@@ -78,20 +78,20 @@ foreach($linea in $fichero)
 
 
 # A continuación, las propiedades de New-ADUser que se han utilizado son:
-SamAccountName: nombre de la cuenta SAM para compatibilidad con equipos anteriores a Windows 2000.
-UserPrincipalName: Nombre opcional que puede ser más corto y fácil de recordar que el DN (Distinguished Name) y que puede ser utilizado por el sistema.
-Name: Nombre de la cuenta de usuario.
-Surname: Apellidos del usuario.
-DisplayName: Nombre del usuario que se mostrará cuando inicie sesión en un equipo.
-GivenName: Nombre de pila.
-Description: Descripción de la cuenta de usuario.
-EmailAddress: Dirección de correo electrónico.
-AccountPassword: Contraseña encriptada.
-Enabled: Cuenta habilitada ($true) o deshabilitada ($false).
-CannotChangePassword: El usuario no puede cambiar la contraseña (como antes, tiene dos valores: $true y $false).
-ChangePasswordAtLogon: Si su valor es $true obliga al usuario a cambiar la contraseña cuando vuelva a iniciar sesión.
-PasswordNotRequired: Permite que el usuario no tenga contraseña.
-HomeDrive "H:" : La carpeta personal aparecerá en la unidad de red H:
-HomeDirectory "$linea.DirPersonales\$nameShort": La carpeta personal se hallará en \\NombreServidor\Dir-Personales\Cuenta-Usuario
-ProfilePath $perfilmovil: El perfil del usuario se almacenará en \\NombreServidor\Dir-Perfiles\$nombreCorto
-ScriptPath $linea.ScriptPath: El script de inicio de sesión se halla en \\NombreServidor\Scripts\logon
+#SamAccountName: nombre de la cuenta SAM para compatibilidad con equipos anteriores a Windows 2000.
+#UserPrincipalName: Nombre opcional que puede ser más corto y fácil de recordar que el DN (Distinguished Name) y que puede ser utilizado por el sistema.
+#Name: Nombre de la cuenta de usuario.
+#Surname: Apellidos del usuario.
+#DisplayName: Nombre del usuario que se mostrará cuando inicie sesión en un equipo.
+#GivenName: Nombre de pila.
+#Description: Descripción de la cuenta de usuario.
+#EmailAddress: Dirección de correo electrónico.
+#AccountPassword: Contraseña encriptada.
+#Enabled: Cuenta habilitada ($true) o deshabilitada ($false).
+#CannotChangePassword: El usuario no puede cambiar la contraseña (como antes, tiene dos valores: $true y $false).
+#ChangePasswordAtLogon: Si su valor es $true obliga al usuario a cambiar la contraseña cuando vuelva a iniciar sesión.
+#PasswordNotRequired: Permite que el usuario no tenga contraseña.
+#HomeDrive "H:" : La carpeta personal aparecerá en la unidad de red H:
+#HomeDirectory "$linea.DirPersonales\$nameShort": La carpeta personal se hallará en \\NombreServidor\Dir-Personales\Cuenta-Usuario
+#ProfilePath $perfilmovil: El perfil del usuario se almacenará en \\NombreServidor\Dir-Perfiles\$nombreCorto
+#ScriptPath $linea.ScriptPath: El script de inicio de sesión se halla en \\NombreServidor\Scripts\logon
