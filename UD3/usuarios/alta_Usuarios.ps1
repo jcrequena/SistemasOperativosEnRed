@@ -53,55 +53,38 @@ foreach($linea_leida in $fichero_csv_importado)
 	$nameLarge=$linea.Name+' '+$linea_leida.Surname+' '+$linea_leida.Surname2
 	$computerAccount=$linea_leida.Computer
 	$email=$nameShort+"@"+$a+"."+$b
-	$perfilmovil=$linea_leida.PerfilMovil+"\"+$nameShort
+	
   
-  
-	#Si el usaurio ya existe (Nombre + 1er Apellido), ampliamos el nombre corto con el 2 Apellido   
-	if (Get-ADUser -filter { name -eq $nameShort })
-	{
-		$nameShort=$linea_leida.Name+'.'+$linea_leida.Surname+$linea_leida.Surname2
-	}
-	#
-  #El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
-	#que contiene el valor true/false para habilitar o no habilitar el usuario y convertirlo en boolean.
-  #
+ 
+	
+#
+#El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
+#que contiene el valor true/false para habilitar o no habilitar el usuario y convertirlo en boolean.
+#
 	[boolean]$Habilitado=$true
   	If($linea_leida.Hability -Match 'false') { $Habilitado=$false}
   
-  $ExpirationAccount = $linea_leida.DaysAccountExpire
- 	$timeExp = (get-date).AddDays($ExpirationAccount)
-	
 	New-ADUser `
-    -SamAccountName $nameShort `
-    -UserPrincipalName $nameShort `
-    -Name $nameShort `
+    		-SamAccountName $nameShort `
+    		-UserPrincipalName $nameShort `
+    		-Name $nameShort `
 		-Surname $Surnames `
-    -DisplayName $nameLarge `
-    -GivenName $name `
-    -LogonWorkstations:$linea.Computer `
+    		-DisplayName $nameLarge `
+    		-GivenName $name `
+    		-LogonWorkstations:$linea.Computer `
 		-Description "Cuenta de $nameLarge" `
-    -EmailAddress $email `
+    		-EmailAddress $email `
 		-AccountPassword $passAccount `
-    -Enabled $Habilitado `
+    		-Enabled $Habilitado `
 		-CannotChangePassword $false `
-    -ChangePasswordAtLogon $true `
+    		-ChangePasswordAtLogon $true `
 		-PasswordNotRequired $false `
-    -Path $rutaContenedor `
-    -AccountExpirationDate $timeExp `
-	
-  #Asignar la cuenta de Usuario creada a un Grupo
+    		-Path $rutaContenedor
+    		
+  	#Asignar la cuenta de Usuario creada a un Grupo
 	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
 	$cnGrpAccount="Cn="+$linea_leida.Group+","+$rutaContenedor
 	Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
-	
-	#
-	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)   
-	# Para ello, importamos una utilidad (Set-OSCLogonHours) que nos permite establecer el horario
-  # El SetADUserLogonTime.psm1 está situado en este ejemplo en C:\Scripts\LogonHours
-	#
-	Import-Module C:\Scripts\LogonHours\SetADUserLogonTime.psm1
-	Set-OSCLogonHours -SamAccountName $nameShort -DayofWeek Monday,Tuesday,Wednesday,Thursday,Friday -From 8AM -To 6PM
-	
 }
 
 
