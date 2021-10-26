@@ -1,9 +1,10 @@
 #alta_Usuarios.ps1
-#A la ejeción del script le pasamos 2 parámetros para capturar el nombre del dominio y sufijo (donde queremos crear los usuarios)
+#A la ejeción del script le pasamos 2 parámetros para capturar el nombre del dominio y sufijo 
+#(donde queremos crear los usuarios)
 #Parámetro 1: el nombre netbios del dominio.
 #Parámetro 2: el sufijo del dominio
 #Ejemplo: smr.local --> Parámetro 1 sería smr y Parámetro 2 local
-# Ejemplo de ejecución del script: alta_Usuarios.ps1 smr local 
+#Ejemplo de ejecución del script: alta_Usuarios.ps1 smr local 
 
 #
 #Capturamos los 2 parámetros que hemos pasado en la ejecución del script ($a será el nombre del dominio y $b el sufijo)
@@ -41,12 +42,14 @@ $fichero_csv_importado = import-csv -Path $fichero_csv -Delimiter :
 foreach($linea_leida in $fichero_csv_importado)
 {
 	#Componemos la ruta donde queda ubicado el objeto a crear (usuario). Ejemplo: OU=DepInformatica,dc=smr,dc=local
-  $rutaContenedor =$linea_leida.ContainerPath+","+$dc 
-	#
-  #Guardamos de manera segura la contraseña con el comando ConvertTo-SecureString. En este caso, la contraseña corresponde al NIF (9 números + letra)
-	#
-  $passAccount=ConvertTo-SecureString $linea_leida.NIF -AsPlainText -force
+  	$rutaContenedor =$linea_leida.ContainerPath+","+$dc 
 	
+	#
+  	#Guardamos de manera segura la contraseña con el comando ConvertTo-SecureString. En este caso, la contraseña corresponde al NIF (9 números + letra)
+	#
+  	$passAccount=ConvertTo-SecureString $linea_leida.NIF -AsPlainText -force
+	
+	#Asignamos a las variables lo capturado de los campos del csv
 	$name=$linea.Name
 	$nameShort=$linea.Name+'.'+$linea_leida.Surname
 	$Surnames=$linea.Surname+' '+$linea_leida.Surname2
@@ -54,13 +57,10 @@ foreach($linea_leida in $fichero_csv_importado)
 	$computerAccount=$linea_leida.Computer
 	$email=$nameShort+"@"+$a+"."+$b
 	
-  
- 
-	
-#
-#El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
-#que contiene el valor true/false para habilitar o no habilitar el usuario y convertirlo en boolean.
-#
+	#
+	#El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
+	#que contiene el valor true/false para habilitar o no habilitar el usuario y convertirlo en boolean.
+	#
 	[boolean]$Habilitado=$true
   	If($linea_leida.Hability -Match 'false') { $Habilitado=$false}
   
