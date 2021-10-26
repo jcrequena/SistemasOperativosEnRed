@@ -1,2 +1,2 @@
-Name:Surname:Surname2:NIF:Group:ContainerPath:Computer:Hability:DaysAccountExpire:HomeDrive:HomeDirectory
-Luis:Gullom:Maria:12345678-A:OU=DepInformatica:W10-001:true:15:H:srv-2012R2D-FSMO\Dir-Personales$
+Name:Surname:Surname2:NIF:Group:ContainerPath:Computer:Hability:
+Luis:Gullom:Maria:12345678-A:DepInformatica:OU=DepInformatica:W10-001:true
