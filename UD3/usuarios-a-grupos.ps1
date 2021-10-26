@@ -11,17 +11,20 @@ $dc="dc="+$dominio+",dc="+$sufijo
 #Primero comprobaremos si se tiene cargado el módulo Active Directory
 if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe una entrada llamada ActiveDirectory
 {
-  Import-Module ActiveDirectory #Se carga el mÃ³dulo
+  Import-Module ActiveDirectory #Se carga el módulo
 }
 #
 #Añadir usuarios a grupos
 #
 $fileUsersCsv=Read-Host "Introduce el fichero csv de los usuarios:"
 $fichero = import-csv -Path $fileUsersCsv -Delimiter :
+
+#El fichero csv tiene esta estructura (2 campos)
+#Grupo:Usuario
 		     
 foreach($linea in $fichero)
 {
-	Add-ADGroupMember -Identity $linea.Name -Members $linea.User
+	Add-ADGroupMember -Identity $linea.Grupo -Members $linea.Usuario
 }
 
 #El fichero csv será de esta forma
