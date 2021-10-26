@@ -30,7 +30,7 @@ if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe un
 #
 $fichero_csv=Read-Host "Introduce el fichero csv de los usuarios:"
 
-#El fichero csv tiene esta estructura (13 campos)
+#El fichero csv tiene esta estructura (9 campos)
 #Name:Surname:Surname2:NIF:Group:ContainerPath:Computer:Hability:DaysAccountExpire
 
 #
