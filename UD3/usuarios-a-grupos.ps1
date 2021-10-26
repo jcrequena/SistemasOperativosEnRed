@@ -21,13 +21,12 @@ $fichero = import-csv -Path $fileUsersCsv -Delimiter :
 
 #El fichero csv tiene esta estructura (2 campos)
 #Grupo:Usuario
-		     
+#grupo1:user1
+#grupo2:user2
+
 foreach($linea in $fichero)
 {
 	Add-ADGroupMember -Identity $linea.Grupo -Members $linea.Usuario
 }
 
-#El fichero csv será de esta forma
-#Name:User
-#grupo1:user1
-#grupo2:user2
+
