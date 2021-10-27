@@ -30,8 +30,8 @@ if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe un
 #
 $fichero_csv=Read-Host "Introduce el fichero csv de los usuarios:"
 
-#El fichero csv tiene esta estructura (13 campos)
-#Name:Surname:Surname2:NIF:Group:ContainerPath:Computer:Hability:DaysAccountExpire:HomeDrive:HomeDirectory:PerfilPath:ScriptPath
+#El fichero csv tiene esta estructura (14 campos)
+#Name:Surname:Surname2:NIF:Group:ContainerPath:Computer:Hability:DaysAccountExpire:HomeDrive:HomeDirectory:PerfilPath:ScriptPath:Teletrabajo
 
 #
 #Importamos el fichero csv (comando import-csv) y lo cargamos en la variable fichero_csv. 
@@ -41,11 +41,11 @@ $fichero_csv_importado = import-csv -Path $fichero_csv -Delimiter :
 foreach($linea_leida in $fichero_csv_importado)
 {
 	#Componemos la ruta donde queda ubicado el objeto a crear (usuario). Ejemplo: OU=DepInformatica,dc=smr,dc=local
-  $rutaContenedor =$linea_leida.ContainerPath+","+$dc 
+  	$rutaContenedor =$linea_leida.ContainerPath+","+$dc 
 	#
-  #Guardamos de manera segura la contraseña con el comando ConvertTo-SecureString. En este caso, la contraseña corresponde al NIF (9 números + letra)
+  	#Guardamos de manera segura la contraseña con el comando ConvertTo-SecureString. En este caso, la contraseña corresponde al NIF (9 números + letra)
 	#
-  $passAccount=ConvertTo-SecureString $linea_leida.NIF -AsPlainText -force
+  	$passAccount=ConvertTo-SecureString $linea_leida.NIF -AsPlainText -force
 	
 	$name=$linea.Name
 	$nameShort=$linea.Name+'.'+$linea_leida.Surname
@@ -62,46 +62,46 @@ foreach($linea_leida in $fichero_csv_importado)
 		$nameShort=$linea_leida.Name+'.'+$linea_leida.Surname+$linea_leida.Surname2
 	}
 	#
-  #El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
+  	#El parámetro -Enabled es del tipo booleano por lo que hay que leer la columna del csv
 	#que contiene el valor true/false para habilitar o no habilitar el usuario y convertirlo en boolean.
-  #
+  	#
 	[boolean]$Habilitado=$true
   	If($linea_leida.Hability -Match 'false') { $Habilitado=$false}
   
-  $ExpirationAccount = $linea_leida.DaysAccountExpire
+  	$ExpirationAccount = $linea_leida.DaysAccountExpire
  	$timeExp = (get-date).AddDays($ExpirationAccount)
 	
 	New-ADUser `
-    -SamAccountName $nameShort `
-    -UserPrincipalName $nameShort `
-    -Name $nameShort `
+    		-SamAccountName $nameShort `
+   	 	-UserPrincipalName $nameShort `
+    		-Name $nameShort `
 		-Surname $Surnames `
-    -DisplayName $nameLarge `
-    -GivenName $name `
-    -LogonWorkstations:$linea.Computer `
+    		-DisplayName $nameLarge `
+    		-GivenName $name `
+    		-LogonWorkstations:$linea.Computer `
 		-Description "Cuenta de $nameLarge" `
-    -EmailAddress $email `
+    		-EmailAddress $email `
 		-AccountPassword $passAccount `
-    -Enabled $Habilitado `
+    		-Enabled $Habilitado `
 		-CannotChangePassword $false `
-    -ChangePasswordAtLogon $true `
+    		-ChangePasswordAtLogon $true `
 		-PasswordNotRequired $false `
-    -Path $rutaContenedor `
-    -AccountExpirationDate $timeExp `
+    		-Path $rutaContenedor `
+    		-AccountExpirationDate $timeExp `
 		-HomeDrive "$linea.HomeDrive:" `
-    -HomeDirectory "$linea_leida.DirPersonales\$nameShort" `
-    -ProfilePath $perfilmovil `
-    -ScriptPath $linea.ScriptPath
+    		-HomeDirectory "$linea_leida.DirPersonales\$nameShort" `
+    		-ProfilePath $perfilmovil `
+    		-ScriptPath $linea.ScriptPath
 	
-  #Asignar la cuenta de Usuario creada a un Grupo
-	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
-	$cnGrpAccount="Cn="+$linea_leida.Group+","+$rutaContenedor
-	Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
+  		#Asignar la cuenta de Usuario creada a un Grupo
+		# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
+		$cnGrpAccount="Cn="+$linea_leida.Group+","+$rutaContenedor
+		Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 	
 	#
 	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)   
 	# Para ello, importamos una utilidad (Set-OSCLogonHours) que nos permite establecer el horario
-  # El SetADUserLogonTime.psm1 está situado en este ejemplo en C:\Scripts\LogonHours
+ 	# El SetADUserLogonTime.psm1 está situado en este ejemplo en C:\Scripts\LogonHours
 	#
 	Import-Module C:\Scripts\LogonHours\SetADUserLogonTime.psm1
 	Set-OSCLogonHours -SamAccountName $nameShort -DayofWeek Monday,Tuesday,Wednesday,Thursday,Friday -From 8AM -To 6PM
