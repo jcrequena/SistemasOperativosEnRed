@@ -10,7 +10,6 @@
 #1º. Disminuir nivel (degradación)
 #2º. Hay que elimnar los Roles AD DS y DNS
 
-uninstall-ADDSDomainController 
 # Importamos el módulo ADDS
 if (!(Get-Module -Name ADDSDeployment)) #Se comprueba si se tiene cargado el módulo
 {
@@ -18,10 +17,7 @@ if (!(Get-Module -Name ADDSDeployment)) #Se comprueba si se tiene cargado el mó
 }
 
 # Despromocionamos el dominio adicional
-# ForceRemoval desinstalará AD DS aunque no haya conexión con ningún otro controlador de dominio en la red.
-# para evitar que el cmdlet pueda interrumpir su ejecución, el argumento Force hace que no se tenga en cuenta ningún aviso que pueda aparecer durante el proceso.
-
-Uninstall-ADDSDomainController-ForceRemoval:$true -Force:$true
+Uninstall-ADDSDomainController -DemoteOperationMasterRole:$true -ForceRemoval:$true -Force:$true
 
 #Descripción de los parámetros
 #Uninstall-ADDSDomainController: desistala un controlador de dominio en el Active Directory.
