@@ -17,7 +17,10 @@ if (!(Get-Module -Name ADDSDeployment)) #Se comprueba si se tiene cargado el mó
 }
 
 # Despromocionamos el dominio adicional
-Uninstall-ADDSDomainController -DemoteOperationMasterRole:$true -ForceRemoval:$true -Force:$true
+Uninstall-ADDSDomainController `
+-DemoteOperationMasterRole:$true `
+-ForceRemoval:$true `
+-Force:$true
 
 #Descripción de los parámetros
 #Uninstall-ADDSDomainController: desistala un controlador de dominio en el Active Directory.
