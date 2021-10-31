@@ -22,7 +22,7 @@ $fichero = import-csv -Path $fileUsersCsv -Delimiter :
 #grupo1:user1
 #grupo2:user2
 
-foreach($linea in $fichero)
+foreach($linea_leida in $fichero)
 {
-	Add-ADGroupMember -Identity $linea.Grupo -Members $linea.Usuario
+	Add-ADGroupMember -Identity $linea_leida.Grupo -Members $linea_leida.Usuario
 }
