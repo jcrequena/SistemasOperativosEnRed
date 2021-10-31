@@ -78,7 +78,7 @@ foreach($linea_leida in $fichero_csv_importado)
 		-Surname $Surnames `
     		-DisplayName $nameLarge `
     		-GivenName $name `
-    		-LogonWorkstations:$linea.Computer `
+    		-LogonWorkstations:$linea_leida.Computer `
 		-Description "Cuenta de $nameLarge" `
     		-EmailAddress $email `
 		-AccountPassword $passAccount `
