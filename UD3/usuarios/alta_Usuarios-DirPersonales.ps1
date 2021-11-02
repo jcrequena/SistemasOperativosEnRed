@@ -104,7 +104,7 @@ foreach($linea_leida in $fichero_csv_importado)
  	# El SetADUserLogonTime.psm1 está situado en este ejemplo en C:\Scripts\LogonHours
 	#
 	Import-Module C:\Scripts\LogonHours\SetADUserLogonTime.psm1
-	Set-OSCLogonHours -SamAccountName $nameShort -DayofWeek Monday,Tuesday,Wednesday,Thursday,Friday -From 8AM -To 6PM
+	Set-OSCLogonHours -SamAccountName $nameShort -DayofWeek Monday,Tuesday,Wednesday,Thursday,Friday -From $linea_leida.Horario
 	
 	#
 	#Creamos el directorio personal de cada usuario con los permisos adecuados. Control Total para el usuario
