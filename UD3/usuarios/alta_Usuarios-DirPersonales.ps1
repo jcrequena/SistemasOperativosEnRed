@@ -99,13 +99,9 @@ foreach($linea_leida in $fichero_csv_importado)
 		Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 	
 	#
-	## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)   
-	# Para ello, importamos una utilidad (Set-OSCLogonHours) que nos permite establecer el horario
- 	# El SetADUserLogonTime.psm1 está situado en este ejemplo en C:\Scripts\LogonHours
-	#
-	Import-Module C:\Scripts\LogonHours\SetADUserLogonTime.psm1
-	Set-OSCLogonHours -SamAccountName $nameShort -DayofWeek Monday,Tuesday,Wednesday,Thursday,Friday -From $linea_leida.Schedule
-	
+	## Establecer horario de inicio de sesión (canpo Schedule: L,09:00-15:00)
+	net user $nameShort /times:$linea_leida.Schedule
+
 	#
 	#Creamos el directorio personal de cada usuario con los permisos adecuados. Control Total para el usuario
 	#
