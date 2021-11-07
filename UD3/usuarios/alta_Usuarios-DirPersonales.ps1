@@ -99,7 +99,7 @@ foreach($linea_leida in $fichero_csv_importado)
 		Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 	
 	#
-	## Establecer horario de inicio de sesión (canpo Schedule: L,09:00-15:00)
+	## Establecer horario de inicio de sesión (canpo Schedule: L,09:00-15:00`;M,08:00-14:00)
 	net user $nameShort /times:$linea_leida.Schedule
 
 	#
