@@ -21,6 +21,7 @@ New-SmbShare -Name Publico-RC -Path $ruta -FullAccess Administradores -ReadAcces
 
 #-------------------------------------------
 #Ejemplo Práctico permisos NTFS - Seguridad al directorio F:\Publico
+#Al grupo local SMR_GL_R_DirPublico le damos permisos de lectura en el directorio
 #------------------------------------------
 #Los puntos que hay que seguir para establecer los permisos NTFS son
 #1. Recuperar las reglas de ACL existente
@@ -29,13 +30,8 @@ New-SmbShare -Name Publico-RC -Path $ruta -FullAccess Administradores -ReadAcces
 #3. Agregar la nueva regla ACL en el conjunto de permisos existente
 #4. Aplicar la nueva ACL al archivo o carpeta existente usando Set-ACL
 
-
-#0.Deshabilitar / habilitar la herencia de permisos
-$ ACL.SetAccessRuleProtection ($true, $false) $ACL | Set-Acl -Path $ruta
-
-
 #----------------------------
-#Al grupo local SMR_GL_R_DirPublico le damos permisos de lectura en el directorio
+#INICIO DEL PROCESO
 #----------------------------
 #1. Obtenemos la lista acl (permisos NTFS) de la carpeta
 $acl = Get-Acl -Path $ruta
