@@ -2,10 +2,18 @@
 #Crear un recurso compartido y asignar permisos al miso. Ejemplo: Asignar a la carpeta Publico los permisos de red siguientes:
 #Acceso total (FullAccess) al usuario administrador
 #Acceso en modo lectura (ReadAccess) para todos.
+#Manual: https://docs.microsoft.com/en-us/powershell/module/smbshare/new-smbshare?view=windowsserver2019-ps
+#Usamos 2 grupos locales para los permisos de lectura y cambio
+#Acceso total para el grupo Administradores
+#Con ConcurrentUserLimit establecemos a 28 el número de usaurios que acceden de manera simultánea al recurso compartido
+#En Description ponemos una breve descripción de la utilidad del directorio compartido
 
-New-SmbShare -Name Publico-RC -Path F:\Publico -FullAccess administrador -ReadAccess Everyone
+New-SmbShare -Name Publico-RC -Path F:\Publico -FullAccess Administradores -ReadAccess SMR_GL_R_DirPublico `
+-ChangeAccess SMR_GL_RW_DirPublico -ConcurrentUserLimit 28 `
+-Description "Carpeta publico para el acceso de usuarios"
 
-#Añadir permiso NTFS a una carpeta. Ejemplo: Carpeta C:\Publico
+
+#Añadir permisos NTFS a una carpeta. Ejemplo: Carpeta C:\Publico
 $ruta = 'C:\Publico'
 #Creamos la carpeta que hemos añadido en la variable $ruta 
 New-Item -Path $ruta -ItemType Directory
