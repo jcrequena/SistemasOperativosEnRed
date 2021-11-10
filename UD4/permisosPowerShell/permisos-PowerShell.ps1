@@ -36,20 +36,27 @@ New-SmbShare -Name Publico-RC -Path $ruta -FullAccess Administradores -ReadAcces
 #1. Obtenemos la lista acl (permisos NTFS) de la carpeta
 $acl = Get-Acl -Path $ruta
 "1.1 Quitamos la herencia copiando los permisos
-$acl.SetAccessRuleProtection($true,$false)
+$acl.SetAccessRuleProtection($true,$true)
 $acl | Set-Acl -Path $ruta
+1.2 Eliminamos el grupo Usuarios del dominio (Usuarios)
+$grupoUsers='BUILTIN\Usuarios'
+--> BUILTIN\Usuarios
+Fuente: https://www.enmimaquinafunciona.com/pregunta/105013/eliminar-completamente-un-usuario-de-la-acl-mediante-powershell
+
+
 #2. Creamos un nuevo FileSystemAccessRule 
 $regla = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule("SMR_GL_R_DirPublico", "Read", "Allow") 
+#Posibles valores: Read-Write-Modify-
 #3.Agregar la nueva regla
-$getPermisosNTFS.SetAccessRule($regla)
+$acl.SetAccessRule($regla)
 #4. Aplicar la nueva ACL al archivo o carpeta (Añadir permisos a la carpeta)
-$getPermisosNTFS | Set-Acl -Path $ruta
+$acl | Set-Acl -Path $ruta
 
 
 #----------------------------
 #Comprobar permisos
 #----------------------------
-$getPermisosNTFS.Access
+$acl.Access
 
 
 #----------------------------
