@@ -19,21 +19,17 @@ New-SmbShare -Name Publico-RC -Path $ruta -FullAccess Administradores -ReadAcces
 -ChangeAccess SMR_GL_RW_DirPublico -ConcurrentUserLimit 28 `
 -Description "Carpeta publico para el acceso de usuarios"
 
-
-#Añadir permisos NTFS a una carpeta. Ejemplo: Carpeta F:\Publico
-$ruta = 'F:\Publico'
-#Creamos la carpeta que hemos añadido en la variable $ruta 
-New-Item -Path $ruta -ItemType Directory
-
+#-------------------------------------------
+#Ejemplo Práctico permisos NTFS - Seguridad al directorio F:\Publico
+#------------------------------------------
 #Los puntos que hay que seguir para establecer los permisos NTFS son
 #1. Recuperar las reglas de ACL existentes
 #2. Crea un nuevo FileSystemAccessRule 
 #3. Agregar la nueva regla ACL en el conjunto de permisos existente
 #4. Aplicar la nueva ACL al archivo o carpeta existente usando Set-ACL
 
-
 #----------------------------
-#Ejemplo Práctico. Al grupo local SMR_GL_R_DirPublico le damos permisos de lectura en el directorio
+#Al grupo local SMR_GL_R_DirPublico le damos permisos de lectura en el directorio
 #----------------------------
 #1. Obtenemos la lista acl (permisos NTFS) de la carpeta
 $getPermisosNTFS = Get-Acl -Path $ruta
@@ -55,7 +51,8 @@ $getPermisosNTFS.Access
 #----------------------------
 #Elimnar Permisos explícitos
 #----------------------------
-#Los permisos explícitos son aquellos que se establecen de forma predeterminada en objetos que no son secundarios cuando se crea el objeto, o los que crea el usuario en objetos secundarios, primarios o que no son secundarios.
+#Los permisos explícitos son aquellos que se establecen de forma predeterminada en objetos que 
+#no son secundarios cuando se crea el objeto, o los que crea el usuario en objetos secundarios, primarios o que no son secundarios.
  
 $Path = 'C:\Publico'
 $acl = Get-Acl -Path $path
