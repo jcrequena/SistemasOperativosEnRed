@@ -1,39 +1,57 @@
 #Permisos de red. 
 #Crear un recurso compartido y asignar permisos al miso. Ejemplo: Asignar a la carpeta Publico los permisos de red siguientes:
 #Acceso total (FullAccess) al usuario administrador
-#Acceso en modo lectura (ReadAccess) para todos.
 #Manual: https://docs.microsoft.com/en-us/powershell/module/smbshare/new-smbshare?view=windowsserver2019-ps
 #Usamos 2 grupos locales para los permisos de lectura y cambio
 #Acceso total para el grupo Administradores
 #Con ConcurrentUserLimit establecemos a 28 el número de usaurios que acceden de manera simultánea al recurso compartido
 #En Description ponemos una breve descripción de la utilidad del directorio compartido
 
-New-SmbShare -Name Publico-RC -Path F:\Publico -FullAccess Administradores -ReadAccess SMR_GL_R_DirPublico `
+#----------------------------------
+#Ejemplo Práctico permisos de red
+#----------------------------------
+
+$ruta = 'F:\Publico'
+#Creamos la carpeta que hemos añadido en la variable $ruta 
+New-Item -Path $ruta -ItemType Directory
+
+New-SmbShare -Name Publico-RC -Path $ruta -FullAccess Administradores -ReadAccess SMR_GL_R_DirPublico `
 -ChangeAccess SMR_GL_RW_DirPublico -ConcurrentUserLimit 28 `
 -Description "Carpeta publico para el acceso de usuarios"
 
 
-#Añadir permisos NTFS a una carpeta. Ejemplo: Carpeta C:\Publico
-$ruta = 'C:\Publico'
+#Añadir permisos NTFS a una carpeta. Ejemplo: Carpeta F:\Publico
+$ruta = 'F:\Publico'
 #Creamos la carpeta que hemos añadido en la variable $ruta 
 New-Item -Path $ruta -ItemType Directory
 
-#Obtenemos la lista acl (permisos NTFS) de la carpeta
+#Los puntos que hay que seguir para establecer los permisos NTFS son
+#1. Recuperar las reglas de ACL existentes
+#2. Crea un nuevo FileSystemAccessRule 
+#3. Agregar la nueva regla ACL en el conjunto de permisos existente
+#4. Aplicar la nueva ACL al archivo o carpeta existente usando Set-ACL
+
+
+#----------------------------
+#Ejemplo Práctico
+#----------------------------
+#1. Obtenemos la lista acl (permisos NTFS) de la carpeta
 $getPermisosNTFS = Get-Acl -Path $ruta
- 
+#2. Creamos un nuevo FileSystemAccessRule 
 $permisoadd = 'Todos', 'FullControl', 'ContainerInherit, ObjectInherit', 'None', 'Allow'
 $regla = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule -ArgumentList $permisoadd
+#3.Agregar la nueva regla
 $getPermisosNTFS.SetAccessRule($regla)
- 
-#Añadir permisos a la carpeta
+#4. Aplicar la nueva ACL al archivo o carpeta (Añadir permisos a la carpeta)
 $getPermisosNTFS | Set-Acl -Path $ruta
  
+
+#----------------------------
 #Comprobar permisos
+#----------------------------
 $getPermisosNTFS.Access
 
  
-
-
 
 #----------------------------
 #Elimnar Permisos explícitos
