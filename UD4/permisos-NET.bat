@@ -12,13 +12,19 @@ net share Documentos_Finanzas=C:\Documentación\Finanzas /GRANT:Todos,full
 net share Documentos_Producción=C:\Documentación\Producción /GRANT:Todos,full
 net share Documentos_Servicios=C:\Documentación\Servicios /GRANT:Todos,full
 net share Documentos_Ventas=C:\Documentación\Ventas /GRANT:Todos,full
+REM 
 REM Aplicamos las ACLs
+REM https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/icacls
+
 icacls C:\Documentación\Dirección /GRANT smr\Dirección:(R,W)
 icacls C:\Documentación\Finanzas /GRANT smr\Finanzas:(R,W)
 icacls C:\Documentación\Producción /GRANT smr\Producción:(R,W)
 icacls C:\Documentación\Servicios /GRANT smr\Servicios:(R,W)
 icacls C:\Documentación\Ventas /GRANT smr\Ventas:(R,W)
 REM Eliminamos los permisos asignados al grupo 'Usuarios del dominio'
+REM /inheritancelevel: [e | d | r]
+REM     e: Enables inheritance - d: Disables inheritance and copies the ACESS - r: Removes all inherited ACESS
+
 icacls C:\Documentación\Dirección /inheritance:d /T
 icacls C:\Documentación\Dirección /remove:g Usuarios
 icacls C:\Documentación\Finanzas /inheritance:d /T
