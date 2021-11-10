@@ -33,25 +33,24 @@ New-Item -Path $ruta -ItemType Directory
 
 
 #----------------------------
-#Ejemplo Práctico
+#Ejemplo Práctico. Al grupo local SMR_GL_R_DirPublico le damos permisos de lectura en el directorio
 #----------------------------
 #1. Obtenemos la lista acl (permisos NTFS) de la carpeta
 $getPermisosNTFS = Get-Acl -Path $ruta
 #2. Creamos un nuevo FileSystemAccessRule 
-$permisoadd = 'Todos', 'FullControl', 'ContainerInherit, ObjectInherit', 'None', 'Allow'
-$regla = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule -ArgumentList $permisoadd
+$regla = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule("SMR_GL_R_DirPublico", "Read", "Allow") 
 #3.Agregar la nueva regla
 $getPermisosNTFS.SetAccessRule($regla)
 #4. Aplicar la nueva ACL al archivo o carpeta (Añadir permisos a la carpeta)
 $getPermisosNTFS | Set-Acl -Path $ruta
- 
 
+
+ 
 #----------------------------
 #Comprobar permisos
 #----------------------------
 $getPermisosNTFS.Access
 
- 
 
 #----------------------------
 #Elimnar Permisos explícitos
