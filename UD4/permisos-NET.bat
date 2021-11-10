@@ -22,7 +22,7 @@ icacls C:\Documentación\Producción /GRANT smr\Producción:(R,W)
 icacls C:\Documentación\Servicios /GRANT smr\Servicios:(R,W)
 icacls C:\Documentación\Ventas /GRANT smr\Ventas:(R,W)
 REM Eliminamos los permisos asignados al grupo 'Usuarios del dominio'
-REM /inheritancelevel: [e | d | r]
+REM /inheritancelevel: [e - d - r]
 REM     e: Enables inheritance - d: Disables inheritance and copies the ACESS - r: Removes all inherited ACESS
 
 icacls C:\Documentación\Dirección /inheritance:d /T
