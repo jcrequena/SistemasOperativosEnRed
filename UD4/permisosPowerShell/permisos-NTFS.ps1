@@ -18,33 +18,28 @@ $acl = Get-Acl -Path $ruta
 $acl.SetAccessRuleProtection($true,$true)
 $acl | Set-Acl -Path $ruta
 1.2 Eliminamos el grupo Usuarios del dominio (Usuarios)
-$grupoUsers='BUILTIN\Usuarios'
---> BUILTIN\Usuarios
-Fuente: https://www.enmimaquinafunciona.com/pregunta/105013/eliminar-completamente-un-usuario-de-la-acl-mediante-powershell
-
-
+$acl.Access | Where-Object {$_.IdentityReference -eq "BUILTIN\Usuarios"} | Foreach-Object {$acl.RemoveAccessRule($_) | Out-Null}
+$acl | Set-Acl $ruta
 #2. Creamos un nuevo FileSystemAccessRule 
 $regla = New-Object -TypeName System.Security.AccessControl.FileSystemAccessRule("SMR_GL_R_DirPublico", "Read", "Allow") 
-#Posibles valores: Read-Write-Modify-
 #3.Agregar la nueva regla
 $acl.SetAccessRule($regla)
 #4. Aplicar la nueva ACL al archivo o carpeta (Añadir permisos a la carpeta)
 $acl | Set-Acl -Path $ruta
 
-
-#----------------------------
-#Comprobar permisos
-#----------------------------
+#---------------------------------------------
+#Comprobar permisos: Dos formas de obtenerlos
+#-------------------------------------------
 $acl.Access
+get-acl $ruta | fl
 
 
-#----------------------------
-#Elimnar Permisos
-#----------------------------
+#------------------------------------------------------------------------------------
+#Elimnar Permisos. Ejemplo, se elimina el permiso Read al grupo SMR_GL_R_DirPublico
+#------------------------------------------------------------------------------------
 
-$Path = 'F:\Publico'
-$acl = Get-Acl -Path $path
+$ruta = 'F:\Publico'
+$acl = Get-Acl -Path $ruta
 $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule ("SMR_GL_R_DirPublico", "Read", "Allow")
 $acl.RemoveAccessRule ($AccessRule)
- 
-$acl | Set-Acl -Path $path
+$acl | Set-Acl -Path $ruta
