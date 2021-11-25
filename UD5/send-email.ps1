@@ -1,15 +1,3 @@
-$EmailPropio = "admin@smr.local";
-$EmailDestino = "juancarlos.requena@ieselcaminas.org"
-$Asunto = "El asunto del email"
-$Mensaje = "El cuerpo del mensaje"
-$ServidorSMTP = "smtp.smr.local"
-$ClienteSMTP = New-Object Net.Mail.SmtpClient($ServidorSMTP, 587)
-$ClienteSMTP.EnableSsl = $true
-$ClienteSMTP.Credentials = New-Object System.Net.NetworkCredential("usuario", "contraseña");
-$ClienteSMTP.Send($EmailPropio, $EmailDestino, $Asunto, $Mensaje)
-
-
-
 $EmailDestinatario = "juancarlos.requena@ieselcaminas.org"
 $EmailEmisor = "admin@smr.local"
 $Asunto = "Prueba envío mail desde PowerShell"
@@ -35,9 +23,6 @@ catch
 {
   Write-Error -Message "Error al enviar correo electrónico"
 }
-
-
-
 
 
 #Set-ExecutionPolicy RemoteSigned
