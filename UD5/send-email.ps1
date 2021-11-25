@@ -1,3 +1,6 @@
+
+https://informaticamadridmayor.es/tips/send-mailmessage-envio-de-correos-electronicos-desde-powershell/
+
 $EmailDestinatario = "juancarlos.requena@ieselcaminas.org"
 $EmailEmisor = "admin@smr.local"
 $Asunto = "Prueba envío mail desde PowerShell"
@@ -15,7 +18,12 @@ try
   $SMTPMensaje.SubjectEncoding = $CodificacionCaracteres
   $SMTPCliente = New-Object Net.Mail.SmtpClient($SMTPServidor, 587)
   $SMTPCliente.EnableSsl = $true
-  $SMTPCliente.Credentials = New-Object System.Net.NetworkCredential($EmailEmisor, "contraseña");
+  $password= Get-Credential
+  $SMTPCliente.Credentials = $password
+  
+  $mypasswd = ConvertTo-SecureString "smP@ssdw0rrd2" -AsPlainText -Force
+  #$mycreds = New-Object System.Management.Automation.PSCredential ("user1@woshub.com", $mypasswd)
+  New-Object System.Net.NetworkCredential($EmailEmisor, $mypasswd);
   $SMTPCliente.Send($SMTPMensaje)
   Write-Output "Mensaje enviado correctamente"
 }  
