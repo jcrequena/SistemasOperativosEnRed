@@ -32,6 +32,17 @@ catch
 }
 
 
+Otra forma
+Send-MailMessage `
+-SmtpServer smt.gmail.com -Port 465 –UseSsl `
+-To 'jcrequena.fp@gmail.com' `
+-From 'juancar.facebook@gmail.com' `
+-Subject "Test" `
+-Body "Sending email using PowerShell" `
+-Encoding 'UTF8' `
+-Credential (Get-Credential)
+
+
 #Set-ExecutionPolicy RemoteSigned
 
 #Lo que hay que hacer en el Programador de tareas es:
