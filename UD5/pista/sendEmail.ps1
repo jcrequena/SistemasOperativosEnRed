@@ -34,13 +34,14 @@ catch
 
 Otra forma
 Send-MailMessage `
--SmtpServer smt.gmail.com -Port 465 –UseSsl `
+-Credential (Get-Credential) `
+-SmtpServer smtp.gmail.com -Port 465 –UseSsl `
 -To 'jcrequena.fp@gmail.com' `
 -From 'juancar.facebook@gmail.com' `
 -Subject "Test" `
 -Body "Sending email using PowerShell" `
--Encoding 'UTF8' `
--Credential (Get-Credential)
+-Encoding 'UTF8'
+
 
 
 #Set-ExecutionPolicy RemoteSigned
