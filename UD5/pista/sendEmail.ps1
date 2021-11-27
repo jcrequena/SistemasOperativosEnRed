@@ -27,7 +27,7 @@ $MailMessage = @{
   Attachment = $rutaFicheroZip
 }
 
-try
+try 
 {
   # Contraseña de la cuenta google que se va a usar para enviar el mensaje
   $password = "Camina-100" 
