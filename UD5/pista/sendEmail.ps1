@@ -17,7 +17,7 @@ $accountTo = "juancarlos.requena@ieselcaminas.org"
 $MailMessage = @{
   To = $accountTo
   From = $accountFrom
-  Subject = "DC Server Report - Events Security"
+  Subject = "DC Server Report Domain iesmiralcamp - Events Security"
   Body = "<p>Se adjunta el fichero zip con los eventos de Seguridad con fecha:<strong> $(Get-Date -Format g)</strong></p>”
   Smtpserver = "smtp.gmail.com"
   Port = 587
@@ -30,7 +30,7 @@ $MailMessage = @{
 try 
 {
   # Contraseña de la cuenta google que se va a usar para enviar el mensaje
-  $password = "Camina-100" 
+  $password = "HolaM,34" 
   #Convertimos la contraseña a un string seguro.
   $secureStringPwd = ConvertTo-SecureString $password -AsPlainText -Force
   #Construimos el objeto con las credenciales (cuenta de gmail y contraseña de la cuenta)
