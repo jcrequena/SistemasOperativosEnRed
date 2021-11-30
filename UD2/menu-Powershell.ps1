@@ -1,7 +1,7 @@
 #Fuente: https://gallery.technet.microsoft.com/scriptcenter/Menu-simple-en-PowerShell-95e1f923
 
 #Paso de parámetros al ejecutar el script en la consola
-#Este script recoje 2 parámetros en la llamada del mismo en la consola. 
+#Este script recoge 2 parámetros en la llamada del mismo en la consola. 
 #La ejecución del script será puede ser de dos formas:
 #./menu.ps1 param1 param2
 #o 
