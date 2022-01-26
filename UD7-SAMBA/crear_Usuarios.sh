@@ -1,6 +1,7 @@
 #!/bin/bash
 # Script que da de alta los usuarios indicados en fichero csv
 #ejecutamos el script pasándole como parámetro el nombre del fichero con los datos de los usuarios
+#Ejemplo de uso: crear_Usuarios.sh usuarios.csv
 
 # Lemos cada linea del ficheiro que nos indiquen como parámetro
 #Las columnas del fichero son:
@@ -19,6 +20,6 @@ for i in `cat $1`; do
         #Añade el usuario en la UO correspondiente
         samba-tool user create $LOGIN abc123. --given-name=$NOMBRE --surname=$APELLIDOS --must-change-at-next-login --userou=OU=$UO --uid-number=$UID
         #Hace miembro del grupo correspondiente al usuario
-        samba-tool group addmembers $GRUPO-alum $LOGIN
-        echo "[OK]"
+        samba-tool group addmembers $GRUPO $LOGIN
+        echo "[Usuario $LOGIN creado correctamente]"
 done
