@@ -8,7 +8,7 @@
 # username:Name:Surname:OU:Group:ID
 
 
-while IFS=, read -r col1 col2 col3 col4 col5
+while IFS=, read -r col1 col2 col3 col4 col5 col6
 do
     echo "I got:$col1|$col2"
         # Extraemos los campos de los usuarios
