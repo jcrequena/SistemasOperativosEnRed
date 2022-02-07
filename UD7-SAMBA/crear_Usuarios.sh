@@ -13,7 +13,7 @@ do
     echo "I got:$col1|$col2"
         # Extraemos los campos de los usuarios
         LOGIN=$col1
-        NOMBRE=`$col2
+        NOMBRE=$col2
         APELLIDOS=$col3
         UO=$col4
         GRUPO=$col5
