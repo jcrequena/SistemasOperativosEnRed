@@ -1,0 +1,11 @@
+#Consultar de que servidor se obtiene la hora
+W32tm /query /configuration
+
+#Establecer un servidor personalizado del que se obtiene la hora
+w32tm /config /manualpeerlist:"0.es.pool.ntp.org time.google.com" /syncfromflags:manual /update
+
+#Comprobar que se han establecido los servidores de hora correctamente
+W32tm /query /configuration
+
+#Comprobar que la fecha se ha establecido correctamente
+get-date
