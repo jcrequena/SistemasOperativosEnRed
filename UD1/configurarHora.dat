@@ -9,3 +9,6 @@ W32tm /query /configuration
 
 #Comprobar que la fecha se ha establecido correctamente
 get-date
+
+Referencias:
+https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/ff799054(v=ws.11)
