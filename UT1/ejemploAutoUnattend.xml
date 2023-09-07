@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <unattend xmlns="urn:schemas-microsoft-com:unattend">
+        <settings pass="windowsPE">
+            <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <SetupUILanguage>
+                    <UILanguage>es-ES</UILanguage>
+                </SetupUILanguage>
+                <InputLocale>es-ES</InputLocale>
+                <SystemLocale>es-ES</SystemLocale>
+                <UILanguage>es-ES</UILanguage>
+                <UserLocale>es-ES</UserLocale>
+                <UILanguageFallback>es-ES</UILanguageFallback>
+            </component>
+            <component name="Microsoft-Windows-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <Display>
+                    <ColorDepth>32</ColorDepth>
+                    <HorizontalResolution>1920</HorizontalResolution>
+                    <VerticalResolution>1080</VerticalResolution>
+                </Display>
+                <ImageInstall>
+                    <OSImage>
+                        <InstallFrom>
+                            <MetaData wcm:action="add">
+                                <Key>/IMAGE/NAME</Key>
+                                <Value>Windows 10 Pro</Value>
+                            </MetaData>
+                        </InstallFrom>
+                        <WillShowUI>OnError</WillShowUI>
+                    </OSImage>
+                </ImageInstall>
+                <UserData>
+                    <ProductKey>
+                        <Key>W269N-WFGWX-YVC9B-4J6C9-T83GX</Key>
+                        <WillShowUI>OnError</WillShowUI>
+                    </ProductKey>
+                    <AcceptEula>true</AcceptEula>
+                    <FullName>NOMBRE_USUARIO</FullName>
+                </UserData>
+                <EnableNetwork>true</EnableNetwork>
+                <EnableFirewall>true</EnableFirewall>
+                <Restart>Restart</Restart>
+            </component>
+            <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <SetupUILanguage>
+                    <UILanguage>es-ES</UILanguage>
+                </SetupUILanguage>
+                <InputLocale>es-ES</InputLocale>
+                <SystemLocale>es-ES</SystemLocale>
+                <UILanguage>es-ES</UILanguage>
+                <UILanguageFallback>es-ES</UILanguageFallback>
+                <UserLocale>es-ES</UserLocale>
+            </component>
+            <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <Display>
+                    <ColorDepth>32</ColorDepth>
+                    <HorizontalResolution>1920</HorizontalResolution>
+                    <VerticalResolution>1080</VerticalResolution>
+                </Display>
+                <ImageInstall>
+                    <OSImage>
+                        <InstallFrom>
+                            <MetaData wcm:action="add">
+                                <Key>/IMAGE/NAME</Key>
+                                <Value>Windows 10 Pro</Value>
+                            </MetaData>
+                        </InstallFrom>
+                        <WillShowUI>OnError</WillShowUI>
+                    </OSImage>
+                </ImageInstall>
+                <UserData>
+                    <ProductKey>
+                        <Key>W269N-WFGWX-YVC9B-4J6C9-T83GX</Key>
+                        <WillShowUI>OnError</WillShowUI>
+                    </ProductKey>
+                    <Organization></Organization>
+                    <FullName>NOMBRE_USUARIO</FullName>
+                    <AcceptEula>true</AcceptEula>
+                </UserData>
+                <EnableFirewall>true</EnableFirewall>
+                <EnableNetwork>true</EnableNetwork>
+                <Restart>Restart</Restart>
+            </component>
+        </settings>
+        <settings pass="specialize">
+            <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <AutoLogon>
+                    <Enabled>true</Enabled>
+                    <LogonCount>1</LogonCount>
+                    <Username>Administrator</Username>
+                </AutoLogon>
+                <Themes>
+                    <WindowColor>0</WindowColor>
+                    <DefaultThemesOff>false</DefaultThemesOff>
+                </Themes>
+                <WindowsFeatures>
+                    <ShowInternetExplorer>false</ShowInternetExplorer>
+                    <ShowMediaCenter>false</ShowMediaCenter>
+                    <ShowWindowsMediaPlayer>false</ShowWindowsMediaPlayer>
+                </WindowsFeatures>
+                <ComputerName>Win10-PC</ComputerName>
+                <ProductKey>W269N-WFGWX-YVC9B-4J6C9-T83GX</ProductKey>
+                <RegisteredOrganization></RegisteredOrganization>
+                <TimeZone>Romance Standard Time</TimeZone>
+                <BluetoothTaskbarIconEnabled>false</BluetoothTaskbarIconEnabled>
+                <DisableAutoDaylightTimeSet>false</DisableAutoDaylightTimeSet>
+            </component>
+            <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <InputLocale>es-ES</InputLocale>
+                <SystemLocale>es-ES</SystemLocale>
+                <UILanguage>es-ES</UILanguage>
+                <UILanguageFallback>es-ES</UILanguageFallback>
+                <UserLocale>es-ES</UserLocale>
+            </component>
+            <component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <SkipAutoActivation>true</SkipAutoActivation>
+            </component>
+            <component name="Microsoft-Windows-ErrorReportingCore" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <DisableWER>0</DisableWER>
+            </component>
+        </settings>
+        <settings pass="oobeSystem">
+            <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <AutoLogon>
+                    <LogonCount>1</LogonCount>
+                    <Username>Administrator</Username>
+                    <Enabled>true</Enabled>
+                </AutoLogon>
+                <OOBE>
+                    <HideEULAPage>true</HideEULAPage>
+                    <ProtectYourPC>3</ProtectYourPC>
+                    <NetworkLocation>Home</NetworkLocation>
+                    <HideLocalAccountScreen>true</HideLocalAccountScreen>
+                    <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+                    <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+                    <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+                </OOBE>
+                <Themes>
+                    <DefaultThemesOff>false</DefaultThemesOff>
+                    <WindowColor>0</WindowColor>
+                </Themes>
+                <UserAccounts>
+                    <LocalAccounts>
+                        <LocalAccount wcm:action="add">
+                            <Name>Administrator</Name>
+                            <Group>Administrators</Group>
+                            <DisplayName>Administrator</DisplayName>
+                            <Description>Administrator Account</Description>
+                        </LocalAccount>
+                    </LocalAccounts>
+                </UserAccounts>
+                <VisualEffects>
+                    <FontSmoothing>ClearType</FontSmoothing>
+                    <SystemDefaultBackgroundColor>0</SystemDefaultBackgroundColor>
+                </VisualEffects>
+                <WindowsFeatures>
+                    <ShowInternetExplorer>false</ShowInternetExplorer>
+                    <ShowMediaCenter>false</ShowMediaCenter>
+                    <ShowWindowsMediaPlayer>false</ShowWindowsMediaPlayer>
+                </WindowsFeatures>
+                <BluetoothTaskbarIconEnabled>false</BluetoothTaskbarIconEnabled>
+                <DisableAutoDaylightTimeSet>false</DisableAutoDaylightTimeSet>
+                <TimeZone>Romance Standard Time</TimeZone>
+            </component>
+            <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <InputLocale>es-ES</InputLocale>
+                <SystemLocale>es-ES</SystemLocale>
+                <UILanguage>es-ES</UILanguage>
+                <UILanguageFallback>es-ES</UILanguageFallback>
+                <UserLocale>es-ES</UserLocale>
+            </component>
+        </settings>
+        <settings pass="auditUser">
+            <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <Themes>
+                    <WindowColor>0</WindowColor>
+                    <DefaultThemesOff>false</DefaultThemesOff>
+                </Themes>
+                <WindowsFeatures>
+                    <ShowInternetExplorer>false</ShowInternetExplorer>
+                    <ShowMediaCenter>false</ShowMediaCenter>
+                    <ShowWindowsMediaPlayer>false</ShowWindowsMediaPlayer>
+                </WindowsFeatures>
+            </component>
+        </settings>
+        <settings pass="auditSystem">
+            <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <AutoLogon>
+                    <Enabled>true</Enabled>
+                    <LogonCount>1</LogonCount>
+                    <Username>Administrator</Username>
+                </AutoLogon>
+                <Themes>
+                    <DefaultThemesOff>false</DefaultThemesOff>
+                    <WindowColor>0</WindowColor>
+                </Themes>
+                <WindowsFeatures>
+                    <ShowInternetExplorer>false</ShowInternetExplorer>
+                    <ShowMediaCenter>false</ShowMediaCenter>
+                    <ShowWindowsMediaPlayer>false</ShowWindowsMediaPlayer>
+                </WindowsFeatures>
+                <TimeZone>Romance Standard Time</TimeZone>
+                <DisableAutoDaylightTimeSet>false</DisableAutoDaylightTimeSet>
+            </component>
+        </settings>
+        <settings pass="offlineServicing">
+            <component name="Microsoft-Windows-LUA-Settings" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <EnableLUA>false</EnableLUA>
+            </component>
+        </settings>
+        <cpi:offlineImage cpi:source="wim:c:/users/administrador/desktop/iso-10240.pro-core-x64-es-es/sources/install.wim#Windows 10 Pro" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+</unattend>
