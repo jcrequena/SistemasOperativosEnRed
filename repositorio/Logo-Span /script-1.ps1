@@ -1,4 +1,3 @@
-
 $IPAddress = ”192.168.1.2”
 $Prefix = 24
 $Gateway=192.168.1.254
