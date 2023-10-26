@@ -11,7 +11,7 @@ Install-ADDSForest `
 -DatabasePath "C:\Windows\NTDS" `
 -DomainMode "5" `
 -DomainName "logo-span.com" `
--DomainNetbiosName "smr" `
+-DomainNetbiosName "LOGO-SPAN" `
 -ForestMode "5" `
 -InstallDns:$true `
 -LogPath "C:\Windows\NTDS" `
