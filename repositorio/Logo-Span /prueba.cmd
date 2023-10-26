@@ -1,4 +1,4 @@
-dsquery * parameter
+dsquery * -limit 20
 
 set L
 
