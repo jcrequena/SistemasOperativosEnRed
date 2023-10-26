@@ -1,5 +1,6 @@
 #Variables globales
 $domain="dc=smr,dc=local"
+$domain-email="smr.local"
 #
 #Funciones en la cabecera del script
 #
@@ -50,14 +51,41 @@ function alta_grupos
 }
 function alta_usuarios
 {
-     
+	$fileUsersCsv=Read-Host "Introduce el fichero csv de los usuarios:"
+	$ficheroImportado = import-csv -Path $fileUsersCsv -Delimiter : 				     
+	foreach($linea in $ficheroImportado)
+	{
+		
+		$passAccount=ConvertTo-SecureString $linea.DNI -AsPlainText -force
+		$nameShort=$linea.Name+'.'+$linea.FirstName
+		$Surnames=$linea.FirstName+' '+$linea.LastName
+		$nameLarge=$linea.Name+' '+$linea.FirstName+' '+$linea.LastName
+		$email=$nameShort+"@"+$domain-email
+		[boolean]$Habilitado=$true
+    		If($linea.Enabled -Match 'false') { $Habilitado=$false}
+		#Establecer los días de expiración de la cuenta (Columna del csv ExpirationAccount)
+   		$ExpirationAccount = $linea.ExpirationAccount
+    		$timeExp = (get-date).AddDays($ExpirationAccount)
+		#
+		# Ejecutamos el comando para crear el usuario
+		#
+		New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort `
+		-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name -LogonWorkstations:$linea.Computer `
+		-Description "Cuenta de $nameLarge" -EmailAddress $email `
+		-AccountPassword $passAccount -Enabled $Habilitado `
+		-CannotChangePassword $false -ChangePasswordAtLogon $true `
+		-PasswordNotRequired $false -Path $containerPath -AccountExpirationDate $timeExp
+		#Asignar cuenta de Usuario a Grupo
+		# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
+		$cnGrpAccount="Cn="+$linea.Group+","+$linea.ContainerPath
+		Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
+		#
+		## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)   
+  		#Hacerlo desde CMD
+	}     
      
 }
 
-
-#
-# Antes de insertar un objeto en AD, hay que comprobar que NO existe
-#
 
 #Primero comprobaremos si se tiene cargado el módulo Active Directory
 if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe una entrada llamada ActiveDirectory
@@ -65,32 +93,6 @@ if (!(Get-Module -Name ActiveDirectory)) #Accederá al then solo si no existe un
   Import-Module ActiveDirectory #Se carga el módulo
 }
 
-#Cada vez que se inserta un objeto en AD, primero hay que comprobar que no existe
-#Comprobar si existe un objeto UO en el Controlador del Dominio
-$UO=UnidadOrganizativa
-if ( !(Get-ADOrganizationalUnit -Filter{ name -eq $UO })) #Devuelve false cuando ya existe la unidad organizativa $UO, y true cuando no existe.
-{
-}
-
-#Para Grupos
-$GRP=Grupo1
-if ( !(Get-ADGroup -Filter { name -eq $GRP })) #Devuelve false cuando ya existe el grupo $GRP, y true cuando no existe.
-{
-}
-
-#Para usuarios
-$usu=JC
-if ( !!(Get-ADUser -filter { name -eq $usu }) ) #Devuelve false cuando ya existe el grupo $usu, y true cuando no existe.
-{
-}
-#Para equipos
-$computer=W7-001
-if ( !!(Get-ADComputer -filter { name -eq $computer }) ) #Devuelve false cuando ya existe el ordenador $computer, y true cuando no existe.
-{
-}
-#
-# Fin comprobación de objetos
-#
 
 #
 #MENU PRINCIPAL
