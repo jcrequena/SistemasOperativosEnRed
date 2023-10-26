@@ -32,7 +32,20 @@ function alta_UOs
 }
 function alta_grupos
 {
-     
+     	$gruposCsv=Read-Host "Introduce el fichero csv de Grupos:"
+	$ficheroImportado = import-csv -Path $gruposCsv -delimiter :
+	foreach($linea in $ficheroImportado)
+	{
+		if ( !(Get-ADGroup -Filter { name -eq $linea.Name }) )
+		{
+			New-ADGroup -Name:$linea.Name -Description:$linea.Description `
+			-GroupCategory:$linea.Category `
+			-GroupScope:$linea.Scope  `
+			-Path:$linea.Path
+		}	
+		else { Write-Host "El grupo $line.Name ya existe en el sistema"}
+	}
+ 	 Write-Host "Se han creado las grupos satisfactoriamente en el dominio $domain"}
      
 }
 function alta_usuarios
