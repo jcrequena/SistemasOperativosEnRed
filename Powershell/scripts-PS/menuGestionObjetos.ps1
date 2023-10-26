@@ -1,5 +1,7 @@
+#Variables globales
+$domain="dc=smr,dc=local"
 #
-#Funciones en la cabcera del script
+#Funciones en la cabecera del script
 #
 
 function Show-Menu
@@ -15,10 +17,17 @@ function Show-Menu
      Write-Host "3: Opción '3' Crear Usuarios."
      Write-Host "Q: Opción 'Q' Salir."
 }
-
 function alta_UOs
 {
-     
+     $ficheroCsvUO=Read-Host "Introduce el fichero csv de UO's:"
+     $ficheroImportado = import-csv -Path $ficheroCsvUO -delimiter :
+     foreach($line in $ficheroImportado)
+     {
+          New-ADOrganizationalUnit -Description:$line.Description -Name:$line.Name `
+		-Path:$line.Path -ProtectedFromAccidentalDeletion:$true 
+     }
+     Write-Host "Se han creado las UOs satisfactoriamente en el dominio $domain"}
+}
      
 }
 function alta_grupos
