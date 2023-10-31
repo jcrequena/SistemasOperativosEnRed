@@ -57,10 +57,9 @@ function alta_usuarios
 	{
 		
 		$passAccount=ConvertTo-SecureString $linea.DNI -AsPlainText -force
-		$nameShort=$linea.Name+'.'+$linea.FirstName
 		$Surnames=$linea.FirstName+' '+$linea.LastName
 		$nameLarge=$linea.Name+' '+$linea.FirstName+' '+$linea.LastName
-		$email=$nameShort+"@"+$domain-email
+		$email=$linea.Email
 		[boolean]$Habilitado=$true
     		If($linea.Enabled -Match 'false') { $Habilitado=$false}
 		#Establecer los días de expiración de la cuenta (Columna del csv ExpirationAccount)
@@ -69,22 +68,21 @@ function alta_usuarios
 		#
 		# Ejecutamos el comando para crear el usuario
 		#
-		New-ADUser -SamAccountName $nameShort -UserPrincipalName $nameShort -Name $nameShort `
+		New-ADUser -SamAccountName $linea.Account -UserPrincipalName $linea.Account -Name $linea.Account
 		-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name -LogonWorkstations:$linea.Computer `
 		-Description "Cuenta de $nameLarge" -EmailAddress $email `
 		-AccountPassword $passAccount -Enabled $Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
-		-PasswordNotRequired $false -Path $containerPath -AccountExpirationDate $timeExp
+		-PasswordNotRequired $false -Path $linea.Path -AccountExpirationDate $timeExp
 		#Asignar cuenta de Usuario a Grupo
 		# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
-		$cnGrpAccount="Cn="+$linea.Group+","+$linea.ContainerPath
+		$cnGrpAccount="Cn="+$linea.Group+","+$linea.Path
 		Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 		#
   		## Establecer horario de inicio de sesión       
-                $horassesion = $linea.nettime -replace(" ","")
-                net user $linea.account /times:$horassesion 
+                $horassesion = $linea.NetTime -replace(" ","")
+                net user $linea.Account /times:$horassesion 
 	}     
-     
 }
 
 
