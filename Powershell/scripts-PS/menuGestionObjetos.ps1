@@ -1,6 +1,5 @@
 #Variables globales
 $domain="dc=smr,dc=local"
-$domain-email="smr.local"
 #
 #Funciones en la cabecera del script
 #
@@ -27,9 +26,7 @@ function alta_UOs
           New-ADOrganizationalUnit -Description:$line.Description -Name:$line.Name `
 		-Path:$line.Path -ProtectedFromAccidentalDeletion:$true 
      }
-     Write-Host "Se han creado las UOs satisfactoriamente en el dominio $domain"}
-}
-     
+     Write-Host "Se han creado las UOs satisfactoriamente en el dominio $domain"
 }
 function alta_grupos
 {
@@ -46,7 +43,7 @@ function alta_grupos
 		}	
 		else { Write-Host "El grupo $line.Name ya existe en el sistema"}
 	}
- 	 Write-Host "Se han creado las grupos satisfactoriamente en el dominio $domain"}
+ 	 Write-Host "Se han creado las grupos satisfactoriamente en el dominio $domain"
      
 }
 function alta_usuarios
