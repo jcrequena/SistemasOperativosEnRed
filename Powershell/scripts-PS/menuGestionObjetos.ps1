@@ -80,8 +80,9 @@ function alta_usuarios
 		$cnGrpAccount="Cn="+$linea.Group+","+$linea.ContainerPath
 		Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
 		#
-		## Establecer horario de inicio de sesión de 8am - 6pm Lunes (Monday) to Viernes (Friday)   
-  		#Hacerlo desde CMD
+  		## Establecer horario de inicio de sesión       
+                $horassesion = $linea.nettime -replace(" ","")
+                net user $linea.account /times:$horassesion 
 	}     
      
 }
