@@ -55,7 +55,6 @@ function alta_usuarios
 	$ficheroImportado = import-csv -Path $fileUsersCsv -Delimiter : 				     
 	foreach($linea in $ficheroImportado)
 	{
-		
 		$passAccount=ConvertTo-SecureString $linea.DNI -AsPlainText -force
 		$Surnames=$linea.FirstName+' '+$linea.LastName
 		$nameLarge=$linea.Name+' '+$linea.FirstName+' '+$linea.LastName
@@ -76,8 +75,9 @@ function alta_usuarios
 		-PasswordNotRequired $false -Path $linea.Path -AccountExpirationDate $timeExp
 		#Asignar cuenta de Usuario a Grupo
 		# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
-		$cnGrpAccount="Cn="+$linea.Group+","+$linea.Path
-		Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
+		#En este caso el grupo se encuentra en la misma UO que el usuario
+                $cnGrpAccount="Cn="+$linea.Group+","+$linea.Path
+		Add-ADGroupMember -Identity $cnGrpAccount -Members $linea.Account
 		#
   		## Establecer horario de inicio de sesión       
                 $horassesion = $linea.NetTime -replace(" ","")
