@@ -99,7 +99,7 @@ do
      $input = Read-Host "Por favor, pulse una opción"
      switch ($input)
      {
-           '1. ' {
+           '1' {
                 Clear-Host
                 alta_UOs
            } '2' {
