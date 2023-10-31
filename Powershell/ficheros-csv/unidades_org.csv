@@ -1,3 +1,3 @@
-Name:Description
-Ventas:UO Dep.Ventas
-Marketing:UO Dep. Marketing
+Name:Description:Path
+Ventas:UO Dep.Ventas:dc=smr,dc=local
+Marketing:UO Dep. Marketing:dc=smr,dc=local
