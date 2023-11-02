@@ -1,5 +1,5 @@
 #El fichero csv usado tiene estos campos/columnas
-#Name:FirstName:LastName:DNI:Group:ContainerPath:Computer:ExpirationAccount:Group:Enabled
+Name*Surname*Surname1*Surname2*account*path*dni*Departament*Enabled*Password*ExpirationAccount*email*nettime*computer
 #Capturamos los 2 parámetros que hemos pasado en la ejecución del script
 
 
@@ -22,33 +22,34 @@ $fichero = import-csv -Path $fileUsersCsv -Delimiter *
 						     		     
 foreach($linea in $ficheroImportado)
 {
-	#Guardamos de manera segura la contraseña 
-  	$passAccount=ConvertTo-SecureString $linea.Password -AsPlainText -force
+	
+	$passAccount=ConvertTo-SecureString $linea.DNI -AsPlainText -force
 	$Surnames=$linea.FirstName+' '+$linea.LastName
 	$nameLarge=$linea.Name+' '+$linea.FirstName+' '+$linea.LastName
+	$email=$linea.Email
 	[boolean]$Habilitado=$true
-	If($linea.Enabled -Match 'false') { $Habilitado=$false}
+    	If($linea.Enabled -Match 'false') { $Habilitado=$false}
+	#Establecer los días de expiración de la cuenta (Columna del csv ExpirationAccount)
    	$ExpirationAccount = $linea.ExpirationAccount
     	$timeExp = (get-date).AddDays($ExpirationAccount)
-		
+	#
 	# Ejecutamos el comando para crear el usuario
 	#
-	New-ADUser -SamAccountName $linea.account -UserPrincipalName $linea.account -Name $linea.account `
-		-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name `
-		-Description "Cuenta de $nameLarge" -EmailAddress $linea.email `
+	New-ADUser -SamAccountName $linea.Account -UserPrincipalName $linea.Account -Name $linea.Account
+		-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name -LogonWorkstations:$linea.Computer `
+		-Description "Cuenta de $nameLarge" -EmailAddress $email `
 		-AccountPassword $passAccount -Enabled $Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
-		-PasswordNotRequired $false -Path $linea.path -AccountExpirationDate $timeExp
-  		-LogonWorkstations $linea.computer
-		
-	#Asignar cuenta de Usuario a Grupo
-	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
-	#$cnGrpAccount="Cn="+$linea.Group+","+$linea.ContainerPath
-	#Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
-	#
-	## Establecer horario de inicio de sesión       
-        $horassesion = $linea.nettime -replace(" ","")
-        net user $linea.account /times:$horassesion 	
+		-PasswordNotRequired $false -Path $linea.Path -AccountExpirationDate $timeExp
+		#Asignar cuenta de Usuario a Grupo
+		# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
+		#En este caso el grupo se encuentra en la misma UO que el usuario
+                $cnGrpAccount="Cn="+$linea.Group+","+$linea.Path
+		Add-ADGroupMember -Identity $cnGrpAccount -Members $linea.Account
+		#
+  		## Establecer horario de inicio de sesión       
+                $horassesion = $linea.NetTime -replace(" ","")
+                net user $linea.Account /times:$horassesion 
 } 
 Write-Host "Se han creado los usuarios correctamente en el dominio $domain" 
 
