@@ -25,18 +25,12 @@ $fichero = import-csv -Path $ficheroCsvUO -delimiter :
 #de las líneas del fichero csv. Cada línea que se lee, se guarda en el objeto $linea
 foreach($line in $fichero)
 {
-	#Con este if condicional, comprobamos si el campo Path del objeto $linea no está vacío.
-	#Si no está vacío, componemos la ruta con el valor del campo más el Domain Component. De esta forma
-	#componemos el path (ruta) de la unidad organizativa, es decir, su ubicación en el árbol del dominio
-	#Si está vacío, guardamos en la variable $pathObjectUO, el contenido de la variable $domain 
-	if !($line.Path -noMatch '') { $pathObjectUO=$line.Path+","+$domain}
-	else {$pathObjectUO=$domain}
 	#Antes de crear la OU, primero comprobamos que no exista en el sistema, para ello,
 	#hacemos uso del if condicional
 	if ( !(Get-ADOrganizationalUnit -Filter { name -eq $line.Name }) )
 	{
         	New-ADOrganizationalUnit -Description:$line.Description -Name:$line.Name `
-		-Path:$pathObjectUO -ProtectedFromAccidentalDeletion:$true
+		-Path:$line.Path-ProtectedFromAccidentalDeletion:$true
         }
 	else { Write-Host "La unidad organizativa $line.Name ya existe en el sistema"}
 }
