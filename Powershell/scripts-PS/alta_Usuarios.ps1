@@ -70,3 +70,4 @@ Enabled: Cuenta habilitada ($true) o deshabilitada ($false).
 CannotChangePassword: El usuario no puede cambiar la contraseña (como antes, tiene dos valores: $true y $false).
 ChangePasswordAtLogon: Si su valor es $true obliga al usuario a cambiar la contraseña cuando vuelva a iniciar sesión.
 PasswordNotRequired: Permite que el usuario no tenga contraseña.
+LogonWorkstations: Permite añadir el equipo que usará el usuario para iniciar sesión.
