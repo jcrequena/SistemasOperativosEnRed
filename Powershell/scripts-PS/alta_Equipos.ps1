@@ -8,7 +8,7 @@
 #OU=Equipos-DepInf,OU=Dep-Informatica,DC=smr,DC=local
 
 #Ponemos el Domain Component para el dominio en cuestión, que para este caso es smr.local
-$domainComponent="dc=smr,dc=local"
+$domain="dc=smr,dc=local"
 
 #
 #Creación de los grupos a partir de un fichero csv
@@ -19,7 +19,7 @@ $fichero= import-csv -Path $equiposCsv -delimiter ":"
 
 foreach($line in $fichero)
 {
-	$pathObject=$line.Path+","+$domainComponent	
+	$pathObject=$line.Path+","+$domain	
 	#Comprobamos que no exista el equipo en el sistema
 	if ( !(Get-ADComputer -Filter { name -eq $line.Computer }) )
 	{
@@ -29,5 +29,5 @@ foreach($line in $fichero)
 }
 
 write-Host ""
-write-Host "Se han creado los equipos" -Fore green
+write-Host "Se han creado los equipos en el dominio $domain" -Fore green
 write-Host "" 
