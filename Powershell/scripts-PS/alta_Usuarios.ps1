@@ -39,6 +39,7 @@ foreach($linea in $ficheroImportado)
 		-AccountPassword $passAccount -Enabled $Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
 		-PasswordNotRequired $false -Path $linea.path -AccountExpirationDate $timeExp
+  		-LogonWorkstations $linea.computer
 		
 	#Asignar cuenta de Usuario a Grupo
 	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
