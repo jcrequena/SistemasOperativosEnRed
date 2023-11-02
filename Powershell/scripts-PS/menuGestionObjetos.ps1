@@ -70,6 +70,7 @@ function alta_usuarios
 			-AccountPassword $passAccount -Enabled $Habilitado `
 			-CannotChangePassword $false -ChangePasswordAtLogon $true `
 			-PasswordNotRequired $false -Path $linea.Path -AccountExpirationDate $timeExp
+   			-LogonWorkstations $linea.computer
 		
   		#
   		## Establecer horario de inicio de sesión       
