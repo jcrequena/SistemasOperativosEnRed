@@ -50,6 +50,11 @@ foreach($linea in $ficheroImportado)
   		## Establecer horario de inicio de sesión       
                 $horassesion = $linea.NetTime -replace(" ","")
                 net user $linea.Account /times:$horassesion 
+	#Asignar cuenta de Usuario a Grupo
+	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
+	$cnGrpAccount="Cn="+$linea.Group+","+$linea.Path
+	Add-ADGroupMember -Identity $cnGrpAccount -Members $nameShort
+	
 } 
 Write-Host "Se han creado los usuarios correctamente en el dominio $domain" 
 
