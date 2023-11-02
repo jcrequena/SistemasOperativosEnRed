@@ -65,20 +65,23 @@ function alta_usuarios
 		# Ejecutamos el comando para crear el usuario
 		#
 		New-ADUser -SamAccountName $linea.Account -UserPrincipalName $linea.Account -Name $linea.Account
-		-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name -LogonWorkstations:$linea.Computer `
-		-Description "Cuenta de $nameLarge" -EmailAddress $email `
-		-AccountPassword $passAccount -Enabled $Habilitado `
-		-CannotChangePassword $false -ChangePasswordAtLogon $true `
-		-PasswordNotRequired $false -Path $linea.Path -AccountExpirationDate $timeExp
-		#Asignar cuenta de Usuario a Grupo
+			-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name -LogonWorkstations:$linea.Computer `
+			-Description "Cuenta de $nameLarge" -EmailAddress $email `
+			-AccountPassword $passAccount -Enabled $Habilitado `
+			-CannotChangePassword $false -ChangePasswordAtLogon $true `
+			-PasswordNotRequired $false -Path $linea.Path -AccountExpirationDate $timeExp
+		
+  		#
+  		## Establecer horario de inicio de sesión       
+                $horassesion = $linea.NetTime -replace(" ","")
+                net user $linea.Account /times:$horassesion 
+		
+  		#Asignar cuenta de Usuario a Grupo
 		# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
 		#En este caso el grupo se encuentra en la misma UO que el usuario
                 $cnGrpAccount="Cn="+$linea.Group+","+$linea.Path
 		Add-ADGroupMember -Identity $cnGrpAccount -Members $linea.Account
-		#
-  		## Establecer horario de inicio de sesión       
-                $horassesion = $linea.NetTime -replace(" ","")
-                net user $linea.Account /times:$horassesion 
+		
 	}     
 }
 
