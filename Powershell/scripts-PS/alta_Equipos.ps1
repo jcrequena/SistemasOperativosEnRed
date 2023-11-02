@@ -1,4 +1,3 @@
-# alta_Equipos.ps1 : Parámetro 1 el dc (nombre netbios del dominio) parámetro 2 el sufijo del dominio 
 #Referencia: https://technet.microsoft.com/es-es/library/hh852258(v=wps.630).aspx
 #Para este caso de ejemplo, usamos el csv que contiene lo siguiente
 #Computer:Path
@@ -8,12 +7,8 @@
 #Por lo tanto para crear el equipo en esa ruta sobre el dominio smr.local quedaría así:
 #OU=Equipos-DepInf,OU=Dep-Informatica,DC=smr,DC=local
 
-param($dominio,$sufijoDominio)
-
-#Componemos el Domain Component para el dominio que se pasa por parámetro
-# en este caso, el dominio es smr.local
-#Por lo que hay que componer dc=smr,dc=local
-$domainComponent="dc="+$dominio+",dc="+$sufijoDominio
+#Ponemos el Domain Component para el dominio en cuestión, que para este caso es smr.local
+$domainComponent="dc=smr,dc=local"
 
 #
 #Creación de los grupos a partir de un fichero csv
@@ -36,4 +31,3 @@ foreach($line in $fichero)
 write-Host ""
 write-Host "Se han creado los equipos" -Fore green
 write-Host "" 
-© 2021 GitHub, Inc.
