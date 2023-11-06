@@ -1,5 +1,5 @@
 #El fichero csv usado tiene estos campos/columnas
-Name*Surname*Surname1*Surname2*account*path*dni*Departament*Enabled*Password*ExpirationAccount*email*nettime*computer
+Name*Surname*Surname1*Surname2*account*path*dni*Departament*Enabled*Password*ExpirationAccount*email*NetTime*computer*Group
 #Capturamos los 2 parámetros que hemos pasado en la ejecución del script
 
 
@@ -23,7 +23,7 @@ $fichero = import-csv -Path $fileUsersCsv -Delimiter *
 foreach($linea in $ficheroImportado)
 {
 	
-	$passAccount=ConvertTo-SecureString $linea.DNI -AsPlainText -force
+	$passAccount=ConvertTo-SecureString $linea.Password -AsPlainText -force
 	$Surnames=$linea.FirstName+' '+$linea.LastName
 	$nameLarge=$linea.Name+' '+$linea.FirstName+' '+$linea.LastName
 	$email=$linea.Email
@@ -35,8 +35,8 @@ foreach($linea in $ficheroImportado)
 	#
 	# Ejecutamos el comando para crear el usuario
 	#
-	New-ADUser -SamAccountName $linea.Account -UserPrincipalName $linea.Account -Name $linea.Account
-		-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name -LogonWorkstations:$linea.Computer `
+	New-ADUser -SamAccountName $linea.Account -UserPrincipalName $linea.Account -Name $linea.Account `
+		-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name `
 		-Description "Cuenta de $nameLarge" -EmailAddress $email `
 		-AccountPassword $passAccount -Enabled $Habilitado `
 		-CannotChangePassword $false -ChangePasswordAtLogon $true `
