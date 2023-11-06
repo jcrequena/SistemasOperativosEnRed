@@ -25,13 +25,8 @@ $fichero = import-csv -Path $ficheroCsvUO -delimiter :
 #de las líneas del fichero csv. Cada línea que se lee, se guarda en el objeto $linea
 foreach($line in $fichero)
 {
-	#Antes de crear la OU, primero comprobamos que no exista en el sistema, para ello,
-	#hacemos uso del if condicional
-	if ( !(Get-ADOrganizationalUnit -Filter { name -eq $line.Name }) )
-	{
-        	New-ADOrganizationalUnit -Description:$line.Description -Name:$line.Name `
+        New-ADOrganizationalUnit -Description:$line.Description -Name:$line.Name `
 		-Path:$line.Path-ProtectedFromAccidentalDeletion:$true
-        }
-	else { Write-Host "La unidad organizativa $line.Name ya existe en el sistema"}
+     
 }
 Write-Host "Se han creado las UOs satisfactoriamente en el dominio $domain"
