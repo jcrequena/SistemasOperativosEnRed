@@ -16,15 +16,11 @@ $gruposCsv=Read-Host "Introduce el fichero csv de Grupos:"
 $fichero = import-csv -Path $gruposCsv -delimiter :
 foreach($linea in $fichero)
 {
-	#Comprobamos si no existe el grupo antes de crearlo.
-	if ( !(Get-ADGroup -Filter { name -eq $linea.Name }) )
-	{
-		New-ADGroup -Name:$linea.Name -Description:$linea.Description `
+	
+	New-ADGroup -Name:$linea.Name -Description:$linea.Description `
 		-GroupCategory:$linea.Category `
 		-GroupScope:$linea.Scope  `
 		-Path:$linea.Path
-	}
-	else { Write-Host "El grupo $line.Name ya existe en el sistema"}
 }
 write-Host ""
 write-Host "Se han creado los grupos en el dominio $domain" -Fore green
