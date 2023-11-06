@@ -65,7 +65,7 @@ function alta_usuarios
 		# Ejecutamos el comando para crear el usuario
 		#
 		New-ADUser -SamAccountName $linea.Account -UserPrincipalName $linea.Account -Name $linea.Account
-			-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name -LogonWorkstations:$linea.Computer `
+			-Surname $Surnames -DisplayName $nameLarge -GivenName $linea.Name `
 			-Description "Cuenta de $nameLarge" -EmailAddress $email `
 			-AccountPassword $passAccount -Enabled $Habilitado `
 			-CannotChangePassword $false -ChangePasswordAtLogon $true `
