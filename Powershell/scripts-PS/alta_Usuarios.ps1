@@ -52,6 +52,7 @@ foreach($linea in $ficheroImportado)
 	# Distingued Name CN=Nombre-grupo,ou=..,ou=..,dc=..,dc=...
 	$cnGrpAccount="Cn="+$linea.Group+","+$linea.Path
 	Add-ADGroupMember -Identity $cnGrpAccount -Members $linea.Account
+        #Se podría poner también el nombre del grupo -Identity $linea.Group
 	
 } 
 Write-Host "Se han creado los usuarios correctamente en el dominio $domain" 
