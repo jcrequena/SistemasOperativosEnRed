@@ -1,0 +1,4 @@
+dn: uid=user01,ou=usuarios,ou=depInformatica,dc=dam,dc=local
+changetype: modify
+replace: givenName
+givenName: Usuario 01 - Dep.Informática
