@@ -1,0 +1,63 @@
+#Create LDAP Users
+#Los usuarios user01 y user02 pertenecerán al GGProgramacion (5000)
+#Los usuarios user03 y user04 pertenecerán al GGRedes (5001)
+
+dn: uid=user01,ou=usuarios,ou=depInformatica,dc=dam,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: user01
+sn: Informática
+givenName: User01
+cn: User01 Informática
+displayName: User01 Informática
+uidNumber: 10000
+gidNumber: 5000
+userPassword: {SSHA}w38rc5usDOTWxSvYTZSU0Ddpa1B2/Imo
+loginShell: /bin/bash
+homeDirectory: /home/user01
+
+dn: uid=user02,ou=usuarios,ou=depInformatica,dc=dam,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: user02
+sn: Informática
+givenName: User02
+cn: User02 Informática
+displayName: User02 Informática
+uidNumber: 10001
+gidNumber: 5000
+userPassword: {SSHA}w38rc5usDOTWxSvYTZSU0Ddpa1B2/Imo
+loginShell: /bin/bash
+homeDirectory: /home/user02
+
+dn: uid=user03,ou=usuarios,ou=depInformatica,dc=dam,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: user03
+sn: Informática
+givenName: User03
+cn: User03 Informática
+displayName: User03 Informática
+uidNumber: 10002
+gidNumber: 5001
+userPassword: {SSHA}w38rc5usDOTWxSvYTZSU0Ddpa1B2/Imo
+loginShell: /bin/bash
+homeDirectory: /home/user03
+
+dn: uid=user04,ou=usuarios,ou=depInformatica,dc=dam,dc=local
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: user04
+sn: Informática
+givenName: User04
+cn: User04 Informática
+displayName: User04 Informática
+uidNumber: 10003
+gidNumber: 5001
+userPassword: {SSHA}w38rc5usDOTWxSvYTZSU0Ddpa1B2/Imo
+loginShell: /bin/bash
+homeDirectory: /home/user04
